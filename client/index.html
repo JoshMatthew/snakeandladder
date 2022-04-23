@@ -1,19 +1,208 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Snake and Ladder</title>
-    <link rel="stylesheet" href="./index.css">
-</head>
-<body>
-    <section>
-        <div id="gameScreen">
-            <canvas id="canvas"></canvas>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./index.css" />
+    <link rel="stylesheet" href="./board-components.css">
+  </head>
+  <body>
+    <section id="homeScreen" class="proxy">
+      <div class="container">
+        <span class="main-title">CapSica</span>
+        <div class="menu">
+            <a href="#" class="menu-btn" id="create-room">Create room</a>
+            <a href="#" class="menu-btn" id="join-room">Join room</a>
+        </div>
+      </div>
+    </section>
+    <section id="gameSection" class="proxy hide">
+        <div id="board">
+          <!-- <div id="red" class="players"></div>
+          <div id="blue" class="players"></div> -->
+          <img src="./img/ladder.png" id="l1">
+          <img src="./img/ladder.png" id="l2">
+          <img src="./img/ladder.png" id="l3">
+          <img src="./img/ladder.png" id="l4">
+          <img src="./img/ladder.png" id="l5">
+          <img src="./img/ladder.png" id="l6">
+          <img src="./img/ladder.png" id="l7">
+          <img src="./img/ladder.png" id="l8">
+          <img src="./img/ladder2.png" id="l9">
+          <img src="./img/ladder2.png" id="l10">
+          <img src="./img/s1.png" id="s1">
+          <img src="./img/s2.png" id="s2">
+          <img src="./img/s3.png" id="s3">
+          <img src="./img/s4.png" id="s4">
+          <img src="./img/s5.png" id="s5">
+          <img src="./img/s6.png" id="s6">
+          <img src="./img/s7.png" id="s7">
+          <img src="./img/s8.png" id="s8">
+          <div class="tile"></div>
+          <div class="tile"></div>
+          <div class="tile"></div>
+          <div class="tile"></div>
+          <div class="tile"></div>
+          <div class="tile"></div>
+          <div class="tile"></div>
+          <div class="tile"></div>
+          <div class="tile"></div>
+          <div class="tile"></div>
+          <div class="tile"></div>
+          <div class="tile"></div>
+          <div class="tile"></div>
+          <div class="tile"></div>
+          <div class="tile"></div>
+          <div class="tile"></div>
+          <div class="tile"></div>
+          <div class="tile"></div>
+          <div class="tile"></div>
+          <div class="tile"></div>
+          <div class="tile"></div>
+          <div class="tile"></div>
+          <div class="tile"></div>
+          <div class="tile"></div>
+          <div class="tile"></div>
+          <div class="tile"></div>
+          <div class="tile"></div>
+          <div class="tile"></div>
+          <div class="tile"></div>
+          <div class="tile"></div>
+          <div class="tile"></div>
+          <div class="tile"></div>
+          <div class="tile"></div>
+          <div class="tile"></div>
+          <div class="tile"></div>
+          <div class="tile"></div>
+          <div class="tile"></div>
+          <div class="tile"></div>
+          <div class="tile"></div>
+          <div class="tile"></div>
+          <div class="tile"></div>
+          <div class="tile"></div>
+          <div class="tile"></div>
+          <div class="tile"></div>
+          <div class="tile"></div>
+          <div class="tile"></div>
+          <div class="tile"></div>
+          <div class="tile"></div>
+          <div class="tile"></div>
+          <div class="tile"></div>
+          <div class="tile"></div>
+          <div class="tile"></div>
+          <div class="tile"></div>
+          <div class="tile"></div>
+          <div class="tile"></div>
+          <div class="tile"></div>
+          <div class="tile"></div>
+          <div class="tile"></div>
+          <div class="tile"></div>
+          <div class="tile"></div>
+          <div class="tile"></div>
+          <div class="tile"></div>
+          <div class="tile"></div>
+          <div class="tile"></div>
+          <div class="tile"></div>
+          <div class="tile"></div>
+          <div class="tile"></div>
+          <div class="tile"></div>
+          <div class="tile"></div>
+          <div class="tile"></div>
+          <div class="tile"></div>
+          <div class="tile"></div>
+          <div class="tile"></div>
+          <div class="tile"></div>
+          <div class="tile"></div>
+          <div class="tile"></div>
+          <div class="tile"></div>
+          <div class="tile"></div>
+          <div class="tile"></div>
+          <div class="tile"></div>
+          <div class="tile"></div>
+          <div class="tile"></div>
+          <div class="tile"></div>
+          <div class="tile"></div>
+          <div class="tile"></div>
+          <div class="tile"></div>
+          <div class="tile"></div>
+          <div class="tile"></div>
+          <div class="tile"></div>
+          <div class="tile"></div>
+          <div class="tile"></div>
+          <div class="tile"></div>
+          <div class="tile"></div>
+          <div class="tile"></div>
+          <div class="tile"></div>
+          <div class="tile"></div>
+          <div class="tile"></div>
+          <div class="tile"></div>
+          <div class="tile"></div>
+          <div class="tile"></div>
+        </div>
+
+        <div class="side">
+          <p id="p-turn">Red player's turn</p>
+          <div id="cube-outer">
+            <div id="cube-inner">
+              <div id="front"><img src="./img/1.png"></div>
+              <div id="back"><img src="./img/2.png"></div>
+              <div id="left"><img src="./img/3.png"></div>
+              <div id="right"><img src="./img/4.png"></div>
+              <div id="top"><img src="./img/5.png"></div>
+              <div id="bottom"><img src="./img/6.png"></div>
+            </div>
+          </div>
         </div>
     </section>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.4.1/socket.io.min.js"></script>
+
+    <div class="modal-container hide" id="--modal">
+        <div class="modal">
+            <div class="header" id="close-modal">
+                <span id="close-btn">&#x2715</span>
+            </div>
+            <div class="body">
+                <label for="room-code">Enter Code</label>
+                <input type="text" id="room-code">
+                <a href="#" class="menu-btn btn-modal" id="enter-room">OK</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-container hide" id="--modal-queue">
+        <div class="modal queue">
+            <div class="body -queue">
+              <div>
+                <div>
+                  <label for="game-code">Room id</label>
+                    <span id="game-code"></span>
+                </div>
+                <div>
+                  <label for="player-count">Players</label>
+                  <span id="player-count">4/4</span>
+                </div>
+              </div>
+                <div class="players-list">
+                  <ul id="players">
+                    <li>Red (You)</li>
+                    <li>Blue</li>
+                    <li>Orange</li>
+                    <li>Brown</li>
+                  </ul>
+                </div>
+                <a href="#" class="menu-btn btn-modal" id="start">Start</a>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.js"></script>
     <script src="./index.js"></script>
-</body>
+  </body>
 </html>
