@@ -10,6 +10,8 @@ let { initGame, createNewPlayer } = require("./game");
 const state = {};
 const clientRooms = {};
 
+const PORT = process.env.PORT || 3000 
+
 app.use(express.static(path.join(__dirname, "..", "..", "client")));
 
 app.get("/", (req, res) => {
@@ -261,5 +263,5 @@ io.on("connection", (client) => {
   }
 });
 
-http.listen(3000, () => console.error("listening on http://localhost:3000/"));
+http.listen(PORT, () => console.error("listening on http://localhost:"+PORT));
 console.error("socket.io example");
