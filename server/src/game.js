@@ -1,13 +1,13 @@
 module.exports = {
     createGameState,
-    gameLoop,
-    initGame
+    initGame,
+    createNewPlayer
 }
 
 // sample player
 // {
 //     marginLeft: 0,
-//     marginRight: 0,
+//     marginTop: 0,
 //     color: 'red'
 // }
 
@@ -18,21 +18,39 @@ function initGame() {
 
 function createGameState() {
     return {
-        turn: "",
+        turn: "red",
         players: [],
-        playerColor: '',
-        dice: 1 
+        dice: 1 ,
+        status: 1,
+        winner: -1,
+        roomName: '',
+        moving: false
       };
 }
 
-function gameLoop(state) {
-    if(!state) {
-        return
+function createNewPlayer(playerNumber) {
+    let color = ''
+
+    switch(playerNumber) {
+        case 1:
+            color = 'red'
+            break
+        case 2:
+            color = 'green'
+            break
+        case 3:
+            color = 'yellow'
+            break
+        case 4:
+            color = 'brown'
+            break
+        default:
+            break
     }
 
-    if(state.turn !== state.playerColor) {
-        return
+    return {
+        playerColor: color,
+        marginLeft: 0,
+        marginTop: 0
     }
-
-
 }

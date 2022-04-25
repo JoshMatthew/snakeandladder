@@ -3,14 +3,6 @@
     margin: 0;
     padding: 0;
     font-family: 'Poppins', sans-serif;
-
-    -webkit-touch-callout: none; /* iOS Safari */
-      -webkit-user-select: none; /* Safari */
-       -khtml-user-select: none; /* Konqueror HTML */
-         -moz-user-select: none; /* Old versions of Firefox */
-          -ms-user-select: none; /* Internet Explorer/Edge */
-              user-select: none; /* Non-prefixed version, currently
-                                    supported by Chrome, Edge, Opera and Firefox */
 }
 
 :root {
@@ -283,6 +275,11 @@ img {
     margin-bottom: 1rem;
 }
 
+#p-instruction {
+    margin: -0.9rem 0 1rem 0;
+    font-size: 0.9rem;
+}
+
 .players {
     position: absolute;
     top: 90.9vmin;
@@ -295,5 +292,15 @@ img {
     transition-property: margin;
 }
 
-.players:nth-child(1){background-color: red;}
-.players:nth-child(2){background-color: blue;}
+#red {
+    background-color: red;
+}
+#green {
+    background-color: green;
+}
+#yellow {
+    background-color: yellow;
+}
+#brown {
+    background-color: brown;
+}
