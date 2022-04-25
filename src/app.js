@@ -263,5 +263,5 @@ io.on("connection", (client) => {
   }
 });
 
-http.listen(PORT, () => console.error("listening on http://localhost:"+PORT));
+http.listen(PORT, () => console.error("listening on port "+PORT));
 console.error("socket.io example");
