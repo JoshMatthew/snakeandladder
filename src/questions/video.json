@@ -1,0 +1,114 @@
+{
+    "questions": {
+        "1": {
+            "type": 3,
+            "question": "https://drive.google.com/file/d/1PQ3WNLwEOE5QMEFeIhvoXMMG4tt_2bPS/preview",
+            "ans": "c",
+            "options": [
+                "40Ω",
+                "20Ω",
+                "30Ω",
+                "10Ω"
+            ]
+        },
+        "2": {
+            "type": 3,
+            "question": "https://drive.google.com/file/d/1y8RMwSlfMEJAXr8SWqOZxl8OZFHc8e-V/view?usp=sharing",
+            "ans": "c",
+            "options": [
+                "200 V",
+                "250 V",
+                "300 V",
+                "400 V"
+            ]
+        },
+        "3": {
+            "type": 3,
+            "question": "https://drive.google.com/file/d/1HfvPzE5f9UAFKgEp0Tu1U_QCdAUTdt0t/view?usp=sharing",
+            "ans": "d",
+            "options": [
+                "111Ω",
+                "11.1Ω",
+                "9.0Ω",
+                "0.9Ω"
+            ]
+        },
+        "4": {
+            "type": 3,
+            "question": "https://drive.google.com/file/d/15nihCdt00As4AoZtC7ixaZaiXZlnwqz4/view?usp=sharing",
+            "ans": "a",
+            "options": [
+                "increases, increases",
+                "decreases, decreases",
+                "increases, decreases",
+                "decreases, increases"
+            ]
+        },
+        "5": {
+            "type": 3,
+            "question": "https://drive.google.com/file/d/1068r2nOjwea7VyPEnXpwxZG6cqvtYvAR/view?usp=sharing",
+            "ans": "c",
+            "options": [
+                "539 V",
+                "- 638 V",
+                "-539 V",
+                "438 V"
+            ]
+        },
+        "6": {
+            "type": 3,
+            "question": "https://drive.google.com/file/d/1E2b8GZAfe_ztTMuMErFMBs8iEXmy4X9Z/view?usp=sharing",
+            "ans": "b",
+            "options": [
+                "F= 85 Newton",
+                "F= 80 Newton",
+                "F= 90 Newton",
+                "F= 95 Newton"
+            ]
+        },
+        "7": {
+            "type": 3,
+            "question": "https://drive.google.com/file/d/1rR3bBGd8cDUsUopwZmXNH6PBG2F-OuUJ/view?usp=sharing",
+            "ans": "a",
+            "options": [
+                "-19.2 * 10^-19 Joule",
+                "-19.2 * 10^-20 Joule",
+                "-19.2 * 10^-21 Joule",
+                "-19.2 * 10^-22 Joule"
+            ]
+        },
+        "8": {
+            "type": 3,
+            "question": "https://drive.google.com/file/d/1Ng53mXoqHYxkL9VTjPriKjA7_p0NtPUT/view?usp=sharing",
+            "ans": "a",
+            "options": [
+                "Multimeter",
+                "Sphygmomanometer",
+                "Ahmeter",
+                "Richter Scale"
+            ]
+        },
+        "9": {
+            "type": 3,
+            "question": "https://drive.google.com/file/d/1jIy5H2LEjSKOlWBQ3xQd5zqRWChApvai/view?usp=sharing",
+            "ans": "a",
+            "options": [
+                "Conventional current flows from the positive terminal to the negative terminal while The electron current is the flow of negative charges or electrons through a conductor. ",
+                "Conventional current is the flow of negative charges or electrons through a conductor while electron current flows from the positive terminal to the negative terminal ",
+                "Both are correct",
+                "None of the above"
+            ]
+        },
+        "10": {
+            "type": 3,
+            "question": "https://drive.google.com/file/d/1V1zd-LwRtncnGexVlCbJWBwsx5GEMIjK/view?usp=sharing",
+            "ans": "d",
+            "options": [
+                "Ohm’s law states that there is an equal and opposite reaction for every action.",
+                "Ohm’s law states that the total number of atoms/molecules of a gas (i.e. the amount of gaseous substance) is directly proportional to the volume occupied by the gas at constant temperature and pressure.",
+                "Ohm’s law states that the pressure exerted by a gas (of a given mass, kept at a constant temperature) is inversely proportional to the volume occupied by it.",
+                "Ohm’s law states that the voltage across a conductor is directly proportional to the current flowing through it, provided all physical conditions and temperature, remain constant."
+            ]
+        }
+    }
+}

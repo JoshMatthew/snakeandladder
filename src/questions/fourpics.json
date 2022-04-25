@@ -1,0 +1,132 @@
+{
+    "questions": {
+        "1": {
+            "type": 2,
+            "question": "./img/questions/1.png",
+            "ans": "a",
+            "options": [
+                "SERIES", "CHARGE", "ENERGY"
+            ]
+        },
+        "2": {
+            "type": 2,
+            "question": "./img/questions/2.png",
+            "ans": "c",
+            "options": [
+                "ELECTRIC", "RESISTOR", "PARALLEL"
+            ]
+        },
+        "3": {
+            "type": 2,
+            "question": "./img/questions/3.png",
+            "ans": "b",
+            "options": [
+                "ELECTRONS", "INSULATOR", "CONDUCTOR"
+            ]
+        },
+        "4": {
+            "type": 2,
+            "question": "./img/questions/4.png",
+            "ans": "c",
+            "options": [
+                "ELECTRONS", "INSULATOR", "CONDUCTOR"
+            ]
+        },
+        "5": {
+            "type": 2,
+            "question": "./img/questions/5.png",
+            "ans": "a",
+            "options": [
+                "ELECTRIC FIELD", "MAGNETIC FIELD", "QUANTUMS FIELD"
+            ]
+        },
+        "6": {
+            "type": 2,
+            "question": "./img/questions/6.png",
+            "ans": "c",
+            "options": [
+                "ELECTRIC CURRENTS", "ELECTRON CURRENTS", "ELECTRIC CIRCUITS"
+            ]
+        },
+        "7": {
+            "type": 2,
+            "question": "./img/questions/7.png",
+            "ans": "a",
+            "options": [
+                "OHMS LAW", "LENZ LAW", "CURIE LAW"
+            ]
+        },
+        "8": {
+            "type": 2,
+            "question": "./img/questions/8.png",
+            "ans": "a",
+            "options": [
+                "ELECTROSTATICS", "ELECTROMAGNETS", "THERMODYNAMICS"
+            ]
+        },
+        "9": {
+            "type": 2,
+            "question": "./img/questions/9.png",
+            "ans": "a",
+            "options": [
+                "CONVENTIONAL CURRENT", "CONVENTIONAL CAPACITY", "ALTERNATING CURRENT"
+            ]
+        },
+        "10": {
+            "type": 2,
+            "question": "./img/questions/10.png",
+            "ans": "c",
+            "options": [
+                "electric field", "magnetic field", "electron field"
+            ]
+        },
+        "11": {
+            "type": 2,
+            "question": "./img/questions/11.png",
+            "ans": "b",
+            "options": [
+                "electric field", "magnetic field", "electron field"
+            ]
+        },
+        "12": {
+            "type": 2,
+            "question": "./img/questions/12.png",
+            "ans": "c",
+            "options": [
+                "insulator", "conductor", "capacitor"
+            ]
+        },
+        "13": {
+            "type": 2,
+            "question": "./img/questions/13.png",
+            "ans": "b",
+            "options": [
+                "current", "voltage", "density"
+            ]
+        },
+        "14": {
+            "type": 2,
+            "question": "./img/questions/14.png",
+            "ans": "c",
+            "options": [
+                "electron", "parallel", "resistor"
+            ]
+        },
+        "15": {
+            "type": 2,
+            "question": "./img/questions/15.png",
+            "ans": "a",
+            "options": [
+                "RESISTIVITY", "CAPACITANCE", "DIELECTRICS"
+            ]
+        },
+        "16": {
+            "type": 2,
+            "question": "./img/questions/16.png",
+            "ans": "c",
+            "options": [
+                "INSULATORS", "CAPACITORS", "RESISTANCE"
+            ]
+        }
+    }
+}

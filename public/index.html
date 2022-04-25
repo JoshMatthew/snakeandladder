@@ -19,8 +19,9 @@
       <div class="container">
         <span class="main-title">CapSica</span>
         <div class="menu">
-            <a href="#" class="menu-btn" id="create-room">Create room</a>
-            <a href="#" class="menu-btn" id="join-room">Join room</a>
+            <!-- <a href="#" class="menu-btn" id="create-room">Create room</a> -->
+            <a href="#" class="menu-btn" id="create-room">New Game</a>
+            <!-- <a href="#" class="menu-btn" id="join-room">Join room</a> -->
         </div>
       </div>
     </section>
@@ -173,6 +174,26 @@
                 <label for="room-code">Enter Code</label>
                 <input type="text" id="room-code">
                 <a href="#" class="menu-btn btn-modal" id="enter-room">OK</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-container hide" id="question">
+        <div class="modal question">
+            <div class="body -question">
+                <span id="q-indicator"></span>
+                <div class="question-header hide" id="question-normal">
+                </div>
+                <div class="question-header hide" id="question-img">
+                </div>
+                <div class="question-header hide" id="question-video">
+                </div>
+
+                <div class="question-options" id="q-options">
+                  <ul id="options-list">
+                   
+                  </ul>
+                </div>
             </div>
         </div>
     </div>

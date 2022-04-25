@@ -1,6 +1,7 @@
 // elements
 const modal = document.getElementById("--modal");
 const modalQueue = document.getElementById("--modal-queue");
+const modalQuestion = document.getElementById("question");
 const tiles = document.querySelectorAll(".tile");
 const gameSection = document.getElementById("gameSection");
 const homeScreen = document.getElementById("homeScreen");
@@ -9,6 +10,11 @@ const playerList = document.getElementById("players");
 const playerCount = document.getElementById("player-count");
 const playerTurnIndicator = document.getElementById("p-turn");
 const playerTurnInstruction = document.getElementById("p-instruction");
+const questionNormal = document.getElementById("question-normal");
+const questionImg = document.getElementById("question-img");
+const questionVid = document.getElementById("question-video");
+const optionsList = document.getElementById("options-list");
+const qIndicator = document.getElementById("q-indicator");
 
 // btns
 const joinRoomBtn = document.getElementById("join-room");
@@ -85,7 +91,7 @@ function toUpperCaseColor(color) {
 }
 
 // event listeners
-joinRoomBtn.addEventListener("click", handleJoinRoombtn);
+// joinRoomBtn.addEventListener("click", handleJoinRoombtn);
 closeModal.addEventListener("click", handleModal);
 createRoom.addEventListener("click", handleCreateRoom);
 
@@ -96,6 +102,10 @@ function handleJoinRoombtn(e) {
 
 function handleModal(e) {
   modal.classList.toggle("hide");
+}
+
+function handleQuestionModal() {
+  modalQuestion.classList.toggle("hide")
 }
 
 function handleCreateRoom(e) {

@@ -5,7 +5,8 @@ let app = express();
 let http = require("http").Server(app);
 let io = require("socket.io")(http);
 
-let { initGame, createNewPlayer } = require("./game");
+let { initGame, createNewPlayer} = require("./game");
+let { getRandomQuestion } = require("./questions");
 
 const state = {};
 const clientRooms = {};
@@ -29,6 +30,11 @@ io.on("connection", (client) => {
   client.on("changeTurn", handleChangeTurn);
   client.on("moveDone", handleMoveDone);
   client.on("doneMoving", handleDoneMoving)
+  client.on("getQuestion", handleGetQuestion)
+
+  function handleGetQuestion() {
+    client.emit('question', getRandomQuestion())
+  }
 
 
   function handleDoneMoving(roomName) {

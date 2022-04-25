@@ -1,0 +1,225 @@
+{
+    "questions": {
+        "1": {
+            "type": 1,
+            "question": "If an object is positively charged, theoretically the mass of the object _________",
+            "ans": "b",
+            "options": [
+                "Increases slightly by a factor of 9.11*10-31 kg",
+                "Decreases slightly by a factor of 9.11*10-31 kg",
+                "Remains the same",
+                "May increase or decrease"
+            ]
+        },
+        "2": {
+            "type": 1,
+            "question": "Two equally charged spheres attract each other. Now if they touch each other then they will __________",
+            "ans": "d",
+            "options": [
+                "Attract each other with the same amount of force",
+                "Repel each other",
+                "Attract each other with less amount of force",
+                "Don’t attract or repel"
+            ]
+        },
+        "3": {
+            "type": 1,
+            "question": "Dr. Gilbert tried to hold a brass rod by hand and induce static electricity in it by friction. Why did he fail?",
+            "ans": "b",
+            "options": [
+                "Static electricity is induced only on insulators while brass is conducting",
+                "The induced static charge flew through his hand and body to the ground",
+                "The static charge was not produced at all",
+                "It is not possible to induce static electricity by friction"
+
+            ]
+        },
+        "4": {
+            "type": 1,
+            "question": "The band gap between the valence band and conduction band is the measure of ______",
+            "ans": "a",
+            "options": [
+                "The conductivity of the material",
+                 "The resistivity of the material",
+                 "Charge density",
+                 "Ease of ionization"
+            ]
+        },
+        "5": {
+            "type": 1,
+            "question": "Insulation breakdown may occur at _______",
+            "ans": "a",
+            "options": [
+                "High temperature",
+                "Low temperature",
+                "At any temperature",
+                "Depends on pressure"
+            ]
+        },
+        "6": {
+            "type": 1,
+            "question": "Which group among the following is insulator?",
+            "ans": "b",
+            "options": [
+                "Silver, copper, gold",
+                "Paper, glass, cotton",
+                "The human body, wood, iron",
+                "Glass, copper, paper"
+            ]
+        },
+        "7": {
+            "type": 1,
+            "question": "What will be the total charge on the aluminum rod, if the aluminum rod is charged by the plastic rod through electrostatic induction?",
+            "ans": "c",
+            "options": [
+                "positive",
+                "negative",
+                "zero",
+                "dual"
+            ]
+        },
+        "8": {
+            "type": 1,
+            "question": "Why a person standing inside a Faraday cage do not get affected by the electric field?",
+            "ans": "d",
+            "options": [
+                "Since the electric potential is positive",
+                "Since the electric potential is negative",
+                "Since the electric potential is zero",
+                "Since the outside electric field gets cancelled by the inside electric field"
+            ]
+        },
+        "9": {
+            "type": 1,
+            "question": "What is the behaviour of like charges?",
+            "ans": "b",
+            "options": [
+                "attract",
+                "repel",
+                "exchange charges",
+                "no changes"
+            ]
+        },
+        "10": {
+            "type": 1,
+            "question": "Coulomb law is usually applied in the area of ",
+            "ans": "b",
+            "options": [
+                "Electromagnetics",
+                "Electrostatics",
+                "Magnetism",
+                "Gravitation"
+            ]
+        },
+        "11": {
+            "type": 1,
+            "question": "What is the unit used for measuring electric charge?",
+            "ans": "d",
+            "options": [
+                "Ampere",
+                "Farad",
+                "Volt",
+                "Coulomb"
+            ]
+        },
+        "12": {
+            "type": 1,
+            "question": "Coulomb law is applicable only for",
+            "ans": "a",
+            "options": [
+                "Point charges at rest",
+                "Inverse square law is not satisfied",
+                "Charges are in arbitrary shape",
+                "Calculate the charge on big planets"
+            ]
+        },
+        "13": {
+            "type": 1,
+            "question": "A point charge Q is far from all other charges. At a distance of 2 m from Q, the electric field is 20 N/C. What is the force a charge of 5 Coulombs feels?",
+            "ans": "b",
+            "options": [
+                "4 N",
+                "100 N",
+                "40 N",
+                "10 N"
+            ]
+        },
+        "14": {
+            "type": 1,
+            "question": "What is the magnitude of the electric field intensity at a point where a proton experiences an electrostatic force of magnitude 2.30 x 10-25 newton?",
+            "ans": "a",
+            "options": [
+                "1.44 x 10-6 N/C",
+                "3.68 x 106 N/C",
+                "1.44 x 1044 N/C",
+                "3.68 x 10-44 N/C"
+            ]
+        },
+        "15": {
+            "type": 1,
+            "question": "What is the formula for electric field ",
+            "ans": "a",
+            "options": [
+                "E=F/D ",
+                "W= F*D ",
+                "V= D/t ",
+                "I= V/R"
+            ]
+        },
+        "16": {
+            "type": 1,
+            "question": "Which statement is true? i. E= F/D, ii. E= kq/r^2",
+            "ans": "a",
+            "options": [
+                "the first one is electric field formula ",
+                "the second one is the electric field formula ",
+                "Both are electric field formula ",
+                "None of them are electric field formula"
+            ]
+        },
+        "17": {
+            "type": 1,
+            "question": "What is the surface charge density when the hollow spherical conductor of radius is 3m with a charge of +20uC?",
+            "ans": "b",
+            "options": [
+                "1.789x10^-7 c/m2",
+                "1.768x10^-7c/m2",
+                "1.769x10^7 c/m2",
+                "1.788x10^7 c/m2"
+            ]
+        },
+        "18": {
+            "type": 1,
+            "question": "Two conducting spheres of radius r1 = 8 cm and r2 = 2 cm are separated by a distance much larger than 8 cm and are connected by a thin conducting wire. A total charge of Q = +100 nC is placed on one of the spheres. After a fraction of a second, the charge Q is redistributed and both the spheres attain electrostatic equilibrium. Calculate the charge and surface charge density on each sphere.",
+            "ans": "d",
+            "options": [
+                "0.99 x 10^-6 Cm^-2 and 3.6 x 10^-6 Cm^-2",
+                "0.99 x 10^-6 Cm^-2 and 3.7 x 10^-6 Cm^-2",
+                "0.99 x 10^-6 Cm^-2 and 3.8 x 10^-6 Cm^-2",
+                "0.99 x 10^-6 Cm^-2 and 3.9 x 10^-6 Cm^-2"
+            ]
+        },
+        "19": {
+            "type": 1,
+            "question": "A spherical conductor with radius 40cm has a surface charge density of +20 uC/m^2. What is the total charge on this sphere?",
+            "ans": "c",
+            "options": [
+                "3.04 x 10^-5 C",
+                "4.07 x 10^-5 C",
+                "4.02 x 10^-5 C",
+                "3.02 x 10^-5 C"
+            ]
+        },
+        "20": {
+            "type": 1,
+            "question": "What is the electric flux through a sphere of radius 4m that contains a +50 uC at its center?",
+            "ans": "a",
+            "options": [
+                "5.65 x 10^6 Nm^2/C",
+                "5.66 x 10^6 Nm^2/C",
+                "5.67 x 10^6 Nm^2/C",
+                "5.68x 10^6 Nm^2/C"
+            ]
+        }
+    }
+}

@@ -9,6 +9,7 @@ socket.on("statusChanged", handleStatusChange);
 socket.on("move", handleMove);
 socket.on("turnChanged", handleTurnChanged);
 socket.on("canChangeTurn", handleWillTurnChange);
+socket.on("question", handleQuestion);
 
 socket.on("unknownCode", unknownRoom);
 socket.on("tooManyPlayers", tooManyPlayers);
@@ -20,6 +21,49 @@ let player = {};
 let roomName = "";
 let state = {};
 let animationsDone = false;
+let question = {};
+
+let froms = [
+  [9.8, 0],
+  [49, -9.8],
+  [0, -49],
+  [58.8, -58.8],
+  [39.2, -19.6],
+  [78.4, -29.4],
+  [88.2, -49],
+  [29.4, -68.6],
+  [19.6, -49],
+  [88.2, -9.8],
+  [68.6, -58.8],
+  [9.8, -49],
+  [39.2, -68.6],
+  [29.4, -19.6],
+  [58.8, -88.2],
+  [9.8, -88.2],
+  [78.4, -88.2],
+  [88.2, -39.2],
+];
+
+let tos = [
+  [19.6, -19.6],
+  [58.8, -29.4],
+  [9.8, -68.6],
+  [68.6, -78.4],
+  [29.4, -39.2],
+  [68.6, -49],
+  [78.4, -68.6],
+  [19.6, -88.2],
+  [39.2, -58.8],
+  [68.6, -19.6],
+  [39.2, -29.4],
+  [19.6, -29.4],
+  [49, -58.8],
+  [49, 0],
+  [49, -68.6],
+  [19.6, -68.6],
+  [88.2, -68.6],
+  [88.2, -19.6],
+];
 
 function init() {
   gameSection.classList.toggle("hide");
@@ -35,7 +79,7 @@ function init() {
 function main(e) {
   console.log("state", state);
   console.log("from 34");
-    // changePlayerTurnIndicator(state.turn, player.playerColor);
+  // changePlayerTurnIndicator(state.turn, player.playerColor);
   console.log(
     "state turn: " + state.turn + " player Color: " + player.playerColor
   );
@@ -45,6 +89,7 @@ function main(e) {
     console.log("player: " + player);
     stopEvent = true;
     socket.emit("rollDice", roomName);
+    socket.emit("getQuestion");
   }
 }
 
@@ -164,12 +209,12 @@ function checkWin() {
 }
 
 function handleTurnChanged(newState) {
-  if(!state.moving) {
-    state = JSON.parse(newState)
-    changePlayerTurnIndicator(state.turn, player.playerColor)
+  if (!state.moving) {
+    state = JSON.parse(newState);
+    changePlayerTurnIndicator(state.turn, player.playerColor);
     stopEvent = false;
-  
-    console.log("TURN DONE. NEW STATE - ", state)
+
+    console.log("TURN DONE. NEW STATE - ", state);
   }
 }
 
@@ -212,60 +257,215 @@ function move(direction) {
 
 function checkLaddersAndSnakes() {
   return new Promise(async (resolve, reject) => {
-    let froms = [
-      [9.8, 0],
-      [49, -9.8],
-      [0, -49],
-      [58.8, -58.8],
-      [39.2, -19.6],
-      [78.4, -29.4],
-      [88.2, -49],
-      [29.4, -68.6],
-      [19.6, -49],
-      [88.2, -9.8],
-      [68.6, -58.8],
-      [9.8, -49],
-      [39.2, -68.6],
-      [29.4, -19.6],
-      [58.8, -88.2],
-      [9.8, -88.2],
-      [78.4, -88.2],
-      [88.2, -39.2],
-    ];
-
-    let tos = [
-      [19.6, -19.6],
-      [58.8, -29.4],
-      [9.8, -68.6],
-      [68.6, -78.4],
-      [29.4, -39.2],
-      [68.6, -49],
-      [78.4, -68.6],
-      [19.6, -88.2],
-      [39.2, -58.8],
-      [68.6, -19.6],
-      [39.2, -29.4],
-      [19.6, -29.4],
-      [49, -58.8],
-      [49, 0],
-      [49, -68.6],
-      [19.6, -68.6],
-      [88.2, -68.6],
-      [88.2, -19.6],
-    ];
-
     const currentTurn = document.querySelector(`#${state.turn}`);
 
     for (let i = 0; i < tos.length; i++) {
       if (marginLeft() == froms[i][0] && marginTop() == froms[i][1]) {
-        currentTurn.style.marginLeft = `${tos[i][0]}vmin`;
-        currentTurn.style.marginTop = `${tos[i][1]}vmin`;
-        await new Promise((resolve) => setTimeout(resolve, 400));
-        break;
+        if (froms[i][1] > tos[i][1]) {
+          await showQuestion("ladder", i);
+          break;
+        } else {
+          await showQuestion("snake", i);
+          break;
+        }
       }
     }
     resolve();
   });
+}
+
+function showQuestion(consequence, idx) {
+  return new Promise(async (resolve, reject) => {
+    const questionItself = question.question;
+    const rightAns = question.ans;
+    const options = question.options;
+    let questionUsed = {};
+
+    if (consequence === "snake") {
+      qIndicator.innerHTML =
+        "Answer the question correctly to escape the snake!";
+    } else {
+      qIndicator.innerHTML =
+        "Answer the question correctly to climb the ladder!";
+    }
+
+    console.log("QUestion", questionItself);
+    console.log("type", question.type);
+
+    optionsList.innerHTML = "";
+    questionNormal.innerHTML = "";
+    questionImg.innerHTML = "";
+    questionVid.innerHTML = "";
+
+    if (question.type == "1") {
+      handleQuestionModal();
+      const theSpan = document.createElement("span");
+      theSpan.innerHTML = questionItself;
+
+      questionNormal.append(theSpan);
+
+      console.log("Hey", question.type);
+      questionNormal.classList.toggle("hide");
+      questionUsed = questionNormal;
+
+      for (let i = 0; i < options.length; i++) {
+        let option = document.createElement("li");
+        let content = document.createElement("a");
+        let letter = "A. ";
+
+        content.setAttribute("class", "proxy");
+        content.setAttribute("href", "#");
+        content.setAttribute("id", i);
+
+        if (i === 0) {
+          letter = "A. ";
+        } else if (i === 1) {
+          letter = "B. ";
+        } else if (i === 2) {
+          letter = "C. ";
+        } else if (i === 3) {
+          letter = "D. ";
+        }
+
+        content.innerHTML = `${letter}${options[i]}`;
+        option.append(content);
+        optionsList.append(option);
+      }
+    } else if (question.type == "2") {
+      handleQuestionModal();
+      const img = document.createElement("img");
+      img.setAttribute("src", questionItself);
+      img.setAttribute("alt", "");
+
+      questionImg.append(img);
+
+      console.log("Hey", question.type);
+      questionImg.classList.toggle("hide");
+      questionUsed = questionImg;
+
+      for (let i = 0; i < options.length; i++) {
+        let option = document.createElement("li");
+        let content = document.createElement("a");
+        let letter = "A. ";
+
+        content.setAttribute("class", "proxy");
+        content.setAttribute("href", "#");
+        content.setAttribute("id", i);
+
+        if (i === 0) {
+          letter = "A. ";
+        } else if (i === 1) {
+          letter = "B. ";
+        } else if (i === 2) {
+          letter = "C. ";
+        } else if (i === 3) {
+          letter = "D. ";
+        }
+
+        content.innerHTML = `${letter}${options[i]}`;
+        option.append(content);
+        optionsList.append(option);
+      }
+    } else if (question.type == "3") {
+      handleQuestionModal();
+      const iframe = document.createElement("iframe");
+      iframe.setAttribute("src", questionItself);
+      iframe.setAttribute("allow", "autoplay");
+
+      questionVid.append(iframe);
+      console.log("Hey", question.type);
+      questionVid.classList.toggle("hide");
+      questionUsed = questionVid;
+
+      for (let i = 0; i < options.length; i++) {
+        let option = document.createElement("li");
+        let content = document.createElement("a");
+        let letter = "A. ";
+
+        content.setAttribute("class", "proxy");
+        content.setAttribute("href", "#");
+        content.setAttribute("id", i);
+
+        if (i === 0) {
+          letter = "A. ";
+        } else if (i === 1) {
+          letter = "B. ";
+        } else if (i === 2) {
+          letter = "C. ";
+        } else if (i === 3) {
+          letter = "D. ";
+        }
+
+        content.innerHTML = `${letter}${options[i]}`;
+        option.append(content);
+        optionsList.append(option);
+      }
+    }
+
+    optionsList.addEventListener("click",  f = async(e) => {
+      if (e.target.id !== "options-list") {
+        const ans = getOptionLetterFromIdx(e.target.id);
+        console.log(ans, rightAns);
+
+        if (consequence === "snake") {
+          if (ans === rightAns) {
+            console.log("right");
+            alert("Right answer! You evaded the snake!");
+            await move(getDirection());
+            await checkLaddersAndSnakes();
+            resolve();
+            handleQuestionModal();
+          } else {
+            console.log("wrong");
+            alert("Wrong answer! The snake swallowed you...");
+            const currentTurn = document.querySelector(`#${state.turn}`);
+            currentTurn.style.marginLeft = `${tos[idx][0]}vmin`;
+            currentTurn.style.marginTop = `${tos[idx][1]}vmin`;
+            await new Promise((resolve) => setTimeout(resolve, 400));
+            await checkLaddersAndSnakes();
+            resolve();
+            handleQuestionModal();
+          }
+        } else if (consequence === "ladder") {
+          if (ans === rightAns) {
+            console.log("right");
+            alert("Right answer! Climbing now...");
+            const currentTurn = document.querySelector(`#${state.turn}`);
+            currentTurn.style.marginLeft = `${tos[idx][0]}vmin`;
+            currentTurn.style.marginTop = `${tos[idx][1]}vmin`;
+            await new Promise((resolve) => setTimeout(resolve, 400));
+            resolve();
+            handleQuestionModal();
+          } else {
+            console.log("wrong");
+            alert("Wrong answer! Let's not use the ladder...");
+            await move(getDirection());
+            await checkLaddersAndSnakes();
+            resolve();
+            handleQuestionModal();
+          }
+        }
+
+        questionUsed.classList.toggle("hide");
+        optionsList.removeEventListener('click', f)
+      }
+    }, f);
+  });
+}
+
+function getOptionLetterFromIdx(idx) {
+  if (idx == 0) {
+    return "a";
+  }
+  if (idx == 1) {
+    return "b";
+  }
+  if (idx == 2) {
+    return "c";
+  }
+  if (idx == 3) {
+    return "d";
+  }
 }
 
 //event listeners
@@ -273,9 +473,14 @@ enterRoom.addEventListener("click", handleJoinGame);
 startBtn.addEventListener("click", handleStartGame);
 
 //event handlers
+function handleQuestion(questionFromServer) {
+  const theQuestion = JSON.parse(questionFromServer);
+  question = theQuestion;
+}
+
 async function handleMove(newState) {
   state = JSON.parse(newState);
-  
+
   console.log("Handle dice roll: ", state);
   const diceNumber = state.dice;
 
@@ -295,13 +500,13 @@ async function handleMove(newState) {
   if (wonBy == "none") {
     console.log("pp:-- done checking none won...");
     if (state.turn === player.playerColor) {
-      socket.emit('doneMoving', roomName)
+      socket.emit("doneMoving", roomName);
     }
   }
 }
 
 function handleWillTurnChange(updatedState) {
-  state = JSON.parse(updatedState)
+  state = JSON.parse(updatedState);
   socket.emit("moveDone", roomName);
   // handleTurnChanged(newState)
   stopEvent = false;
