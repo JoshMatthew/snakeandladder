@@ -74,9 +74,10 @@ function init() {
   drawPlayer(state);
   console.log("from 29");
   changePlayerTurnIndicator(state.turn, player.playerColor);
+  socket.emit("getQuestion");
 }
 
-function main(e) {
+async function main(e) {
   console.log("state", state);
   console.log("from 34");
   // changePlayerTurnIndicator(state.turn, player.playerColor);
@@ -85,10 +86,16 @@ function main(e) {
   );
   console.log("triggered" + ` stopEv: ${stopEvent} and canRoll: ${canRoll}`);
   if (e.keyCode == "83" && !stopEvent && state.turn === player.playerColor) {
-    console.log("In");
-    console.log("player: " + player);
-    stopEvent = true;
-    socket.emit("rollDice", roomName);
+    const canMove = await checkLaddersAndSnakes()
+
+    if(canMove) {
+      console.log("In");
+      console.log("player: " + player);
+      stopEvent = true;
+      socket.emit("rollDice", roomName);
+      socket.emit("getQuestion");
+    }
+
     socket.emit("getQuestion");
   }
 }
@@ -160,7 +167,7 @@ function run(diceNumber) {
       let direction = getDirection();
       await move(direction);
     }
-    await checkLaddersAndSnakes();
+    await checkLaddersAndSnakes('after');
     resolve();
   });
 }
@@ -249,28 +256,40 @@ function move(direction) {
       currentTurn.style.marginLeft = String(marginLeft() + 9.8) + "vmin";
     } else if (direction == "left") {
       currentTurn.style.marginLeft = String(marginLeft() - 9.8) + "vmin";
+    } else if (direction == "stay") {
+      currentTurn.style.marginLeft = String(marginLeft() - 0) + "vmin";
     }
     await new Promise((resolve) => setTimeout(resolve, 400));
     resolve();
   });
 }
 
-function checkLaddersAndSnakes() {
+function checkLaddersAndSnakes(when = 'before') {
   return new Promise(async (resolve, reject) => {
-    const currentTurn = document.querySelector(`#${state.turn}`);
+    let canMove = true;
+    let didHitImportantTile = false;
 
     for (let i = 0; i < tos.length; i++) {
       if (marginLeft() == froms[i][0] && marginTop() == froms[i][1]) {
         if (froms[i][1] > tos[i][1]) {
           await showQuestion("ladder", i);
+          didHitImportantTile = true;
           break;
-        } else {
+        } else if (froms[i][1] < tos[i][1]) {
           await showQuestion("snake", i);
+          didHitImportantTile = true;
           break;
         }
       }
     }
-    resolve();
+
+    if(when !== 'after') {
+      if (!didHitImportantTile) {
+        canMove = await showQuestion("normal", 0);
+      }
+    }
+
+    resolve(canMove);
   });
 }
 
@@ -284,9 +303,11 @@ function showQuestion(consequence, idx) {
     if (consequence === "snake") {
       qIndicator.innerHTML =
         "Answer the question correctly to escape the snake!";
-    } else {
+    } else if (consequence === "ladder") {
       qIndicator.innerHTML =
         "Answer the question correctly to climb the ladder!";
+    } else {
+      qIndicator.innerHTML = "Answer the question correctly to move!";
     }
 
     console.log("QUestion", questionItself);
@@ -402,54 +423,67 @@ function showQuestion(consequence, idx) {
       }
     }
 
-    optionsList.addEventListener("click",  f = async(e) => {
-      if (e.target.id !== "options-list") {
-        const ans = getOptionLetterFromIdx(e.target.id);
-        console.log(ans, rightAns);
+    optionsList.addEventListener(
+      "click",
+      (f = async (e) => {
+        if (e.target.id !== "options-list") {
+          const ans = getOptionLetterFromIdx(e.target.id);
+          console.log(ans, rightAns);
 
-        if (consequence === "snake") {
-          if (ans === rightAns) {
-            console.log("right");
-            alert("Right answer! You evaded the snake!");
-            await move(getDirection());
-            await checkLaddersAndSnakes();
-            resolve();
-            handleQuestionModal();
+          if (consequence === "snake") {
+            if (ans === rightAns) {
+              console.log("right");
+              alert("Right answer! You evaded the snake!");
+              await move(getDirection());
+              resolve();
+              handleQuestionModal();
+            } else {
+              console.log("wrong");
+              alert("Wrong answer! The snake swallowed you...");
+              const currentTurn = document.querySelector(`#${state.turn}`);
+              currentTurn.style.marginLeft = `${tos[idx][0]}vmin`;
+              currentTurn.style.marginTop = `${tos[idx][1]}vmin`;
+              await new Promise((resolve) => setTimeout(resolve, 400));
+              resolve();
+              handleQuestionModal();
+            }
+          } else if (consequence === "ladder") {
+            if (ans === rightAns) {
+              console.log("right");
+              alert("Right answer! Climbing now...");
+              const currentTurn = document.querySelector(`#${state.turn}`);
+              currentTurn.style.marginLeft = `${tos[idx][0]}vmin`;
+              currentTurn.style.marginTop = `${tos[idx][1]}vmin`;
+              await new Promise((resolve) => setTimeout(resolve, 400));
+              resolve();
+              handleQuestionModal();
+            } else {
+              console.log("wrong");
+              alert("Wrong answer! Let's not use the ladder...");
+              await move(getDirection());
+              resolve();
+              handleQuestionModal();
+            }
           } else {
-            console.log("wrong");
-            alert("Wrong answer! The snake swallowed you...");
-            const currentTurn = document.querySelector(`#${state.turn}`);
-            currentTurn.style.marginLeft = `${tos[idx][0]}vmin`;
-            currentTurn.style.marginTop = `${tos[idx][1]}vmin`;
-            await new Promise((resolve) => setTimeout(resolve, 400));
-            await checkLaddersAndSnakes();
-            resolve();
-            handleQuestionModal();
+            if (ans === rightAns) {
+              console.log("right");
+              alert("Right answer! Will move...");
+              resolve(true);
+              handleQuestionModal();
+            } else {
+              console.log("wrong");
+              alert("Wrong answer! Let's just sit here for now...");
+              resolve(false);
+              handleQuestionModal();
+            }
           }
-        } else if (consequence === "ladder") {
-          if (ans === rightAns) {
-            console.log("right");
-            alert("Right answer! Climbing now...");
-            const currentTurn = document.querySelector(`#${state.turn}`);
-            currentTurn.style.marginLeft = `${tos[idx][0]}vmin`;
-            currentTurn.style.marginTop = `${tos[idx][1]}vmin`;
-            await new Promise((resolve) => setTimeout(resolve, 400));
-            resolve();
-            handleQuestionModal();
-          } else {
-            console.log("wrong");
-            alert("Wrong answer! Let's not use the ladder...");
-            await move(getDirection());
-            await checkLaddersAndSnakes();
-            resolve();
-            handleQuestionModal();
-          }
+
+          questionUsed.classList.toggle("hide");
+          optionsList.removeEventListener("click", f);
         }
-
-        questionUsed.classList.toggle("hide");
-        optionsList.removeEventListener('click', f)
-      }
-    }, f);
+      }),
+      f
+    );
   });
 }
 
@@ -489,6 +523,7 @@ async function handleMove(newState) {
   await roll(diceNumber);
   let isOutOfRange = checkRange(diceNumber);
   await new Promise((resolve) => setTimeout(resolve, 400));
+
   console.log("pp:-- dice rolled...");
   if (!isOutOfRange) {
     console.log("pp:-- not out of range running...");
