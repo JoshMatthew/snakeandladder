@@ -13,7 +13,7 @@
         },
         "2": {
             "type": 3,
-            "question": "https://drive.google.com/file/d/1y8RMwSlfMEJAXr8SWqOZxl8OZFHc8e-V/view?usp=sharing",
+            "question": "https://drive.google.com/file/d/1y8RMwSlfMEJAXr8SWqOZxl8OZFHc8e-V/preview",
             "ans": "c",
             "options": [
                 "200 V",
@@ -24,7 +24,7 @@
         },
         "3": {
             "type": 3,
-            "question": "https://drive.google.com/file/d/1HfvPzE5f9UAFKgEp0Tu1U_QCdAUTdt0t/view?usp=sharing",
+            "question": "https://drive.google.com/file/d/1HfvPzE5f9UAFKgEp0Tu1U_QCdAUTdt0t/preview",
             "ans": "d",
             "options": [
                 "111Ω",
@@ -35,7 +35,7 @@
         },
         "4": {
             "type": 3,
-            "question": "https://drive.google.com/file/d/15nihCdt00As4AoZtC7ixaZaiXZlnwqz4/view?usp=sharing",
+            "question": "https://drive.google.com/file/d/15nihCdt00As4AoZtC7ixaZaiXZlnwqz4/preview",
             "ans": "a",
             "options": [
                 "increases, increases",
@@ -46,7 +46,7 @@
         },
         "5": {
             "type": 3,
-            "question": "https://drive.google.com/file/d/1068r2nOjwea7VyPEnXpwxZG6cqvtYvAR/view?usp=sharing",
+            "question": "https://drive.google.com/file/d/1068r2nOjwea7VyPEnXpwxZG6cqvtYvAR/preview",
             "ans": "c",
             "options": [
                 "539 V",
@@ -57,7 +57,7 @@
         },
         "6": {
             "type": 3,
-            "question": "https://drive.google.com/file/d/1E2b8GZAfe_ztTMuMErFMBs8iEXmy4X9Z/view?usp=sharing",
+            "question": "https://drive.google.com/file/d/1E2b8GZAfe_ztTMuMErFMBs8iEXmy4X9Z/preview",
             "ans": "b",
             "options": [
                 "F= 85 Newton",
@@ -68,7 +68,7 @@
         },
         "7": {
             "type": 3,
-            "question": "https://drive.google.com/file/d/1rR3bBGd8cDUsUopwZmXNH6PBG2F-OuUJ/view?usp=sharing",
+            "question": "https://drive.google.com/file/d/1rR3bBGd8cDUsUopwZmXNH6PBG2F-OuUJ/preview",
             "ans": "a",
             "options": [
                 "-19.2 * 10^-19 Joule",
@@ -79,7 +79,7 @@
         },
         "8": {
             "type": 3,
-            "question": "https://drive.google.com/file/d/1Ng53mXoqHYxkL9VTjPriKjA7_p0NtPUT/view?usp=sharing",
+            "question": "https://drive.google.com/file/d/1Ng53mXoqHYxkL9VTjPriKjA7_p0NtPUT/preview",
             "ans": "a",
             "options": [
                 "Multimeter",
@@ -90,7 +90,7 @@
         },
         "9": {
             "type": 3,
-            "question": "https://drive.google.com/file/d/1jIy5H2LEjSKOlWBQ3xQd5zqRWChApvai/view?usp=sharing",
+            "question": "https://drive.google.com/file/d/1jIy5H2LEjSKOlWBQ3xQd5zqRWChApvai/preview",
             "ans": "a",
             "options": [
                 "Conventional current flows from the positive terminal to the negative terminal while The electron current is the flow of negative charges or electrons through a conductor. ",
@@ -101,7 +101,7 @@
         },
         "10": {
             "type": 3,
-            "question": "https://drive.google.com/file/d/1V1zd-LwRtncnGexVlCbJWBwsx5GEMIjK/view?usp=sharing",
+            "question": "https://drive.google.com/file/d/1V1zd-LwRtncnGexVlCbJWBwsx5GEMIjK/preview",
             "ans": "d",
             "options": [
                 "Ohm’s law states that there is an equal and opposite reaction for every action.",
