@@ -480,6 +480,7 @@ function showQuestion(consequence, idx) {
 
           questionUsed.classList.toggle("hide");
           optionsList.removeEventListener("click", f);
+          socket.emit("getQuestion");
         }
       }),
       f
