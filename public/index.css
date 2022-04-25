@@ -192,6 +192,11 @@ section {
     border: 0.1vmin solid black;
     height: 98vmin;
     width: 98vmin;
+    background-image: url(./img/board.png);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-color: white;
 }
 
 .tile {
@@ -202,7 +207,7 @@ section {
     text-align: center;
     line-height: 9.601vmin;
     font-size: 2.5vmin;
-    background-color: lightgreen;
+    display: none;
 }
 
 .side {
