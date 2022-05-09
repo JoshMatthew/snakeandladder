@@ -19,9 +19,9 @@
       <div class="container">
         <span class="main-title">CapSica</span>
         <div class="menu">
-            <!-- <a href="#" class="menu-btn" id="create-room">Create room</a> -->
-            <a href="#" class="menu-btn" id="create-room">New Game</a>
-            <!-- <a href="#" class="menu-btn" id="join-room">Join room</a> -->
+            <a href="#" class="menu-btn" id="create-room">Create room</a>
+            <!-- <a href="#" class="menu-btn" id="create-room">New Game</a> -->
+            <a href="#" class="menu-btn" id="join-room">Join room</a>
         </div>
       </div>
     </section>
@@ -151,7 +151,7 @@
 
         <div class="side">
           <p id="p-turn">Red player's turn</p>
-          <p id="p-instruction">Press 's' to roll dice</p>
+          <p id="p-instruction">Your turn</p>
           <div id="cube-outer">
             <div id="cube-inner">
               <div id="front"><img src="./img/1.png"></div>
@@ -163,6 +163,7 @@
             </div>
           </div>
         </div>
+        <a href="#" id="roll-dice-btn" class="proxy">ROLL DICE</a>
     </section>
 
     <div class="modal-container hide" id="--modal">
@@ -220,8 +221,17 @@
         </div>
     </div>
 
+    <div class="modal-container hide" id="--modal-player-info">
+      <div class="modal">
+          <div class="body">
+            <span id="current-turn-indicator"></span>  
+          </div>
+      </div>
+  </div>
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.js"></script>
     <script src="./ui.js"></script>
     <script src="./main.js"></script>
+    <script src="./game.js"></script>
   </body>
 </html>

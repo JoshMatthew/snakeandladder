@@ -4,12 +4,14 @@ module.exports = {
     createNewPlayer
 }
 
-// sample player
-// {
-//     marginLeft: 0,
-//     marginTop: 0,
-//     color: 'red'
-// }
+/*
+* sample player
+* {
+*   marginLeft: 0,
+*   marginTop: 0,
+*   playerColor: 'red'
+* }
+*/
 
 function initGame() {
     const state = createGameState();

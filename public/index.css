@@ -213,7 +213,7 @@ section {
     height: 25vmin;
     width: 35vmin;
     border: 0.2vmin solid black;
-    background-color: lightgreen;
+    background-color: var(--cool-grey);
     text-align: center;
     font-size: 3.5vmin;
 }
@@ -373,6 +373,34 @@ img {
 #question-video iframe {
     width: 500px;
     height: 350px;
+}
+
+#roll-dice-btn {
+    position: absolute;
+    top: 35vmin;
+    left: 10vmin;
+    width: 16vmin;
+    text-align: center;
+    font-size: 1rem;
+    text-decoration: none;
+    color: var(--jet);
+    padding: 0.5rem 0.8rem;
+    border-radius: 7px;
+    margin: -0.5rem 0 0.5rem 0;
+    background-color: var(--cool-grey);
+    box-shadow: var(--jet) 4px 4px;
+}
+
+#roll-dice-btn:hover {
+    background-color: var(--cool-grey-fainted);
+}
+
+#roll-dice-btn:active {
+    box-shadow: none;
+}
+
+#current-turn-indicator{
+    color: var(--bone);
 }
 
 .hide {

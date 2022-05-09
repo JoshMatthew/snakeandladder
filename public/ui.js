@@ -1,6 +1,9 @@
 // elements
 const modal = document.getElementById("--modal");
 const modalQueue = document.getElementById("--modal-queue");
+const currentPlayerIndicatorModal = document.getElementById(
+  "--modal-player-info"
+);
 const modalQuestion = document.getElementById("question");
 const tiles = document.querySelectorAll(".tile");
 const gameSection = document.getElementById("gameSection");
@@ -15,6 +18,9 @@ const questionImg = document.getElementById("question-img");
 const questionVid = document.getElementById("question-video");
 const optionsList = document.getElementById("options-list");
 const qIndicator = document.getElementById("q-indicator");
+const currentTurnIndicatorSpan = document.getElementById(
+  "current-turn-indicator"
+);
 
 // btns
 const joinRoomBtn = document.getElementById("join-room");
@@ -22,6 +28,7 @@ const createRoom = document.getElementById("create-room");
 const enterRoom = document.getElementById("enter-room");
 const closeModal = document.getElementById("close-modal");
 const startBtn = document.getElementById("start");
+const rollDiceBtn = document.getElementById("roll-dice-btn");
 
 // init functions
 function setTileNumbers() {
@@ -37,10 +44,35 @@ function setTileNumbers() {
   });
 }
 
-function drawPlayer(state) {
+function showWinner(winner) {
+  currentTurnIndicatorSpan.innerHTML = `Player ${toUpperCaseColor(
+    winner
+  )} wins!!!`;
+  currentPlayerIndicatorModal.classList.remove("hide");
+}
+
+function showCurrentPlayerMoving(currentTurn) {
+  currentTurnIndicatorSpan.innerHTML = `Player ${toUpperCaseColor(
+    currentTurn
+  )} is making a move...`;
+  currentPlayerIndicatorModal.classList.remove("hide");
+}
+
+function movePlayersByMargin(state) {
   const players = state.players;
 
-  console.log("Players in room: " + state.roomName + " is " + players.length)
+  for (let i = 0; i < players.length; i++) {
+    const player = document.querySelector(`#${players[i].playerColor}`);
+
+    player.style.marginLeft = String(players[i].marginLeft) + "vmin";
+    player.style.marginTop = String(players[i].marginTop) + "vmin";
+  }
+}
+
+function drawPlayers(state) {
+  const players = state.players;
+
+  console.log("Players in room: " + state.roomName + " is " + players.length);
 
   for (let i = 0; i < players.length; i++) {
     const player = document.createElement("div");
@@ -55,23 +87,21 @@ function drawPlayer(state) {
 }
 
 function changePlayerTurnIndicator(turn, playerColor) {
-  console.log(turn,playerColor)
-  console.log(turn === playerColor)
   if (turn !== playerColor) {
-    playerTurnIndicator.innerHTML = `${toUpperCaseColor(turn)}'s turn...`
-    playerTurnInstruction.innerHTML = 'Cannot roll yet'
-    canRoll = false
+    playerTurnIndicator.innerHTML = `${toUpperCaseColor(turn)}'s turn...`;
+    playerTurnInstruction.innerHTML = "Cannot roll yet";
+    rollDiceBtn.classList.add("hide");
+    canRoll = false;
   } else {
-    camRoll = true
-    playerTurnIndicator.innerHTML = `Your turn!`
-    playerTurnInstruction.innerHTML = "Press 's' to roll dice"
+    camRoll = true;
+    playerTurnIndicator.innerHTML = `Your turn!`;
+    playerTurnInstruction.innerHTML = "Your turn";
+    rollDiceBtn.classList.remove("hide");
   }
 }
 
-function addMyPlayer(color, players) {
+function addPlayerToDOM(color, players) {
   playerCount.innerHTML = `${players.length} /4`;
-
-  console.log("My color: " + color);
   playerList.innerHTML = "";
   for (let i = 0; i < players.length; i++) {
     const newPlayer = document.createElement("li");
@@ -79,19 +109,18 @@ function addMyPlayer(color, players) {
       newPlayer.innerHTML = toUpperCaseColor(players[i].playerColor);
       playerList.append(newPlayer);
     } else {
-      newPlayer.innerHTML =
-      toUpperCaseColor(color) + " (You)";
+      newPlayer.innerHTML = toUpperCaseColor(color) + " (You)";
       playerList.append(newPlayer);
     }
   }
 }
 
 function toUpperCaseColor(color) {
-  return color.charAt(0).toUpperCase() + color.slice(1)
+  return color.charAt(0).toUpperCase() + color.slice(1);
 }
 
 // event listeners
-// joinRoomBtn.addEventListener("click", handleJoinRoombtn);
+joinRoomBtn.addEventListener("click", handleJoinRoombtn);
 closeModal.addEventListener("click", handleModal);
 createRoom.addEventListener("click", handleCreateRoom);
 
@@ -105,7 +134,7 @@ function handleModal(e) {
 }
 
 function handleQuestionModal() {
-  modalQuestion.classList.toggle("hide")
+  modalQuestion.classList.toggle("hide");
 }
 
 function handleCreateRoom(e) {
@@ -115,16 +144,16 @@ function handleCreateRoom(e) {
 
 // error handlers
 function invalidSession() {
-  alert("Can't join game. The game has already started or finished.")
-  window.location.reload()
+  alert("Can't join game. The game has already started or finished.");
+  window.location.reload();
 }
 
 function tooManyPlayers() {
-  alert("Can't join game. The game is full.")
-  window.location.reload()
+  alert("Can't join game. The game is full.");
+  window.location.reload();
 }
 
 function unknownRoom(roomCode) {
-  alert("The room [" + roomCode + "] does not exist.")
-  window.location.reload()
+  alert("The room [" + roomCode + "] does not exist.");
+  window.location.reload();
 }
