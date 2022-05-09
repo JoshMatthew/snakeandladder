@@ -31,11 +31,25 @@ io.on("connection", (client) => {
   client.on("moveDone", handleMoveDone);
   client.on("doneMoving", handleDoneMoving)
   client.on("getQuestion", handleGetQuestion)
+  client.on("updateCurrentPlayerMargin", handleUpdateCurrentPlayerMargin)
+
+  function handleUpdateCurrentPlayerMargin(data) {
+    let currentState = state[data.roomName]
+
+    for(let i = 0; i < currentState.players.length; i++) {
+      if (i === data.currentPlayer) {
+        currentState.players[i].marginLeft = data.updatedMargins.marginLeft
+        currentState.players[i].marginTop = data.updatedMargins.marginTop
+      }
+    }
+
+    state[data.roomName] = currentState
+    io.to(data.roomName).emit("gameState", {type: "PLAYER_MOVED", state: JSON.stringify(currentState)});
+  }
 
   function handleGetQuestion() {
     client.emit('question', getRandomQuestion())
   }
-
 
   function handleDoneMoving(roomName) {
     if(roomName) {
@@ -55,6 +69,7 @@ io.on("connection", (client) => {
       let currentState = state[roomName];
       let currentTurn = currentState.turn;
       let newTurn = "red";
+      currentState.moving = false
 
       if (currentState.players.length === 2) {
         switch (currentTurn) {
@@ -99,7 +114,7 @@ io.on("connection", (client) => {
       console.log("new turn - ", newTurn);
       console.log("new state - ", state[roomName]);
 
-      io.to(roomName).emit("turnChanged", JSON.stringify(state[roomName]));
+      io.to(roomName).emit("gameState", {type: "TURN_CHANGED", state: JSON.stringify(currentState)});
     }
   }
 
@@ -160,14 +175,14 @@ io.on("connection", (client) => {
 
     currentState.status = 3;
 
-    io.to(roomName).emit("statusChanged", JSON.stringify(currentState));
+    io.to(roomName).emit("gameState", {type: "STATUS_CHANGED", state: JSON.stringify(currentState)});
     state[roomName] = currentState;
   }
 
   function handleGameStart(roomName) {
     state[roomName].status = 2;
     console.log("room " + roomName + " status changed: " + "2");
-    io.to(roomName).emit("statusChanged", JSON.stringify(state[roomName]));
+    io.to(roomName).emit("gameState", {type: "STATUS_CHANGED", state: JSON.stringify(state[roomName])});
   }
 
   function handleRollDice(roomName) {
@@ -229,7 +244,7 @@ io.on("connection", (client) => {
       playerNumber: numClients + 1,
       state: JSON.stringify(currentState),
     });
-    io.to(roomName).emit("userJoined", JSON.stringify(currentState));
+    client.broadcast.to(roomName).emit("gameState", {type: "PLAYER_JOINED", state: JSON.stringify(currentState)});
   }
 
   function handleNewGame() {

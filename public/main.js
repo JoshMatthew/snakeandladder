@@ -4,9 +4,8 @@ const socket = io();
 socket.on("init", handleInit);
 socket.on("gameState", handleGameState);
 socket.on("gameCode", setGameCode);
-socket.on("userJoined", handleUserJoin);
-socket.on("statusChanged", handleStatusChange);
-socket.on("move", handleMove);
+// socket.on("userJoined", handleUserJoin);
+// socket.on("statusChanged", handleStatusChange);
 socket.on("turnChanged", handleTurnChanged);
 socket.on("canChangeTurn", handleWillTurnChange);
 socket.on("question", handleQuestion);
@@ -65,16 +64,72 @@ let tos = [
   [88.2, -19.6],
 ];
 
+//game create
+/*
+ * when creating a game room, it makes a game/room code
+ * and initializes the player(host)
+ */
+
+// initialize the player
+function handleInit(client) {
+  state = JSON.parse(client.state);
+  player = state.players[client.playerNumber - 1];
+  addPlayerToDOM(player.playerColor, state.players);
+  if (player.playerColor !== "red") {
+    startBtn.classList.toggle("hide");
+  }
+}
+
+//game join
+function handleJoinGame(e) {
+  const roomCode = document.getElementById("room-code").value;
+  socket.emit("joinGame", roomCode);
+  handleModal(e);
+  modalQueue.classList.toggle("hide");
+  gameCode.innerHTML = roomCode;
+}
+
+// start game
+function handleStartGame(e) {
+  if (player.playerColor === "red") {
+    console.log("room name", roomName);
+    socket.emit("gameStart", roomName);
+  }
+}
+
+//status change handler
+function handleStatusChange(updatedState) {
+  state = updatedState;
+
+  if (state.status === 1) {
+    //queue
+  } else if (state.status === 2) {
+    //game start
+    modalQueue.classList.toggle("hide");
+    if(state.turn !== player.playerColor) {
+      showCurrentPlayerMoving(state.turn)
+    }
+    init();
+  } else if (state.status === 3) {
+    //game
+    displayWinner(state.winner); //display it on side
+    showWinner(parseWinnerCode(state.winner)) //show in modal
+  }
+}
+
+//this function initializes the game scene
 function init() {
+  //DOM
   gameSection.classList.toggle("hide");
   homeScreen.classList.toggle("hide");
-
-  document.addEventListener("keydown", main);
   setTileNumbers();
-  drawPlayer(state);
-  console.log("from 29");
-  changePlayerTurnIndicator(state.turn, player.playerColor);
+  drawPlayers(state);
+
+  //events
   socket.emit("getQuestion");
+
+  //mechanics
+  changePlayerTurnIndicator(state.turn, player.playerColor);
 }
 
 async function main(e) {
@@ -84,11 +139,10 @@ async function main(e) {
   console.log(
     "state turn: " + state.turn + " player Color: " + player.playerColor
   );
-  console.log("triggered" + ` stopEv: ${stopEvent} and canRoll: ${canRoll}`);
   if (e.keyCode == "83" && !stopEvent && state.turn === player.playerColor) {
-    const canMove = await checkLaddersAndSnakes()
-
-    if(canMove) {
+    await checkLaddersAndSnakes();
+    console.log("triggered" + ` stopEv: ${stopEvent} and canRoll: ${canRoll}`);
+    if (canMove) {
       console.log("In");
       console.log("player: " + player);
       stopEvent = true;
@@ -162,14 +216,31 @@ function marginTop() {
 }
 
 function run(diceNumber) {
-  return new Promise(async (resolve, reject) => {
-    for (i = 1; i <= diceNumber; i++) {
-      let direction = getDirection();
-      await move(direction);
+  let totalMargins = {
+    marginLeft: marginLeft(),
+    marginTop: marginTop(),
+  }
+
+  if (diceNumber !== 0) {
+    for(let i = 1; i <= diceNumber; i++) {
+      let direction = getDirection(totalMargins);
+      console.log(direction)
+
+      if (direction == "up") {
+        totalMargins.marginTop = Math.round((totalMargins.marginTop -= 9.8) * 10) / 10;
+      } else if (direction == "right") {
+        totalMargins.marginLeft = Math.round((totalMargins.marginLeft += 9.8) * 10) / 10;
+      } else if (direction == "left") {
+        totalMargins.marginLeft = Math.round((totalMargins.marginLeft -= 9.8) * 10) / 10;
+      }
     }
-    await checkLaddersAndSnakes('after');
-    resolve();
-  });
+
+    console.log('position: ', totalMargins)
+    return totalMargins;
+  } else {
+    //don't do anything, don't move
+    return { marginLeft: marginLeft(), marginTop: marginTop() };
+  }
 }
 
 function displayWinner(code) {
@@ -201,27 +272,24 @@ function parseWinnerCode(code) {
 }
 
 function checkWin() {
-  console.log("check win");
   if (marginTop() == -88.2 && marginLeft() == 0) {
-    document.querySelector("#p-turn").innerHTML = `${state.turn} player wins!`;
     socket.emit("winner", {
       turn: state.turn,
       color: player.playerColor,
-      roomName,
+      roomName: state.roomName,
     });
-    return state.turn;
+
+    return true
   } else {
-    return "none";
+    return false
   }
 }
 
 function handleTurnChanged(newState) {
-  if (!state.moving) {
-    state = JSON.parse(newState);
-    changePlayerTurnIndicator(state.turn, player.playerColor);
+  if (!newState.moving) {
+    changePlayerTurnIndicator(newState.turn, player.playerColor);
     stopEvent = false;
-
-    console.log("TURN DONE. NEW STATE - ", state);
+    console.log("TURN DONE. NEW STATE - ", newState);
   }
 }
 
@@ -230,14 +298,16 @@ function changeTurn() {
   //   socket.once("changeTurn", state);
 }
 
-function getDirection() {
+function getDirection(totalMargins) {
+  const marginLeft = totalMargins.marginLeft
+  const marginTop = totalMargins.marginTop
   let direction;
   if (
-    (marginLeft() == 88.2 && ((marginTop() * 10) % (-19.6 * 10)) / 10 == 0) ||
-    (marginLeft() == 0 && ((marginTop() * 10) % (-19.6 * 10)) / 10 != 0)
+    (marginLeft == 88.2 && ((marginTop * 10) % (-19.6 * 10)) / 10 == 0) ||
+    (marginLeft == 0 && ((marginTop * 10) % (-19.6 * 10)) / 10 != 0)
   ) {
     direction = "up";
-  } else if (((marginTop() * 10) % (-19.6 * 10)) / 10 == 0) {
+  } else if (((marginTop * 10) % (-19.6 * 10)) / 10 == 0) {
     direction = "right";
   } else {
     direction = "left";
@@ -246,52 +316,55 @@ function getDirection() {
   return direction;
 }
 
-function move(direction) {
-  return new Promise(async (resolve, reject) => {
-    const currentTurn = document.querySelector(`#${state.turn}`);
+function checkLaddersAndSnakes() {
+  canMove = true;
+  let didHitImportantTile = false;
 
-    if (direction == "up") {
-      currentTurn.style.marginTop = String(marginTop() - 9.8) + "vmin";
-    } else if (direction == "right") {
-      currentTurn.style.marginLeft = String(marginLeft() + 9.8) + "vmin";
-    } else if (direction == "left") {
-      currentTurn.style.marginLeft = String(marginLeft() - 9.8) + "vmin";
-    } else if (direction == "stay") {
-      currentTurn.style.marginLeft = String(marginLeft() - 0) + "vmin";
-    }
-    await new Promise((resolve) => setTimeout(resolve, 400));
-    resolve();
-  });
-}
-
-function checkLaddersAndSnakes(when = 'before') {
-  return new Promise(async (resolve, reject) => {
-    let canMove = true;
-    let didHitImportantTile = false;
-
-    for (let i = 0; i < tos.length; i++) {
-      if (marginLeft() == froms[i][0] && marginTop() == froms[i][1]) {
-        if (froms[i][1] > tos[i][1]) {
-          await showQuestion("ladder", i);
-          didHitImportantTile = true;
-          break;
-        } else if (froms[i][1] < tos[i][1]) {
-          await showQuestion("snake", i);
-          didHitImportantTile = true;
-          break;
-        }
+  for (let i = 0; i < tos.length; i++) {
+    if (marginLeft() == froms[i][0] && marginTop() == froms[i][1]) {
+      if (froms[i][1] > tos[i][1]) {
+        didHitImportantTile = true;
+        return { type: "ladder", index: i };
+      } else if (froms[i][1] < tos[i][1]) {
+        didHitImportantTile = true;
+        return { type: "snake", index: i };
+      }
+    } else {
+      if (!didHitImportantTile && i === tos.length - 1) {
+        return { type: "normal", index: 0 };
       }
     }
-
-    if(when !== 'after') {
-      if (!didHitImportantTile) {
-        canMove = await showQuestion("normal", 0);
-      }
-    }
-
-    resolve(canMove);
-  });
+  }
 }
+
+// function checkLaddersAndSnakes(when = "before") {
+//   return new Promise(async (resolve, reject) => {
+//     canMove = true;
+//     let didHitImportantTile = false;
+
+//     for (let i = 0; i < tos.length; i++) {
+//       if (marginLeft() == froms[i][0] && marginTop() == froms[i][1]) {
+//         if (froms[i][1] > tos[i][1]) {
+//           await showQuestion("ladder", i);
+//           didHitImportantTile = true;
+//           break;
+//         } else if (froms[i][1] < tos[i][1]) {
+//           await showQuestion("snake", i);
+//           didHitImportantTile = true;
+//           break;
+//         }
+//       }
+//     }
+
+//     if (when !== "after") {
+//       if (!didHitImportantTile) {
+//         canMove = await showQuestion("normal", 0);
+//       }
+//     }
+
+//     resolve();
+//   });
+// }
 
 function showQuestion(consequence, idx) {
   return new Promise(async (resolve, reject) => {
@@ -469,6 +542,7 @@ function showQuestion(consequence, idx) {
               console.log("right");
               alert("Right answer! Will move...");
               resolve(true);
+              console.log("Resolving true");
               handleQuestionModal();
             } else {
               console.log("wrong");
@@ -548,60 +622,54 @@ function handleWillTurnChange(updatedState) {
   stopEvent = false;
 }
 
-function handleStatusChange(updatedState) {
-  state = JSON.parse(updatedState);
-
-  if (state.status === 1) {
-    //queue
-  } else if (state.status === 2) {
-    if (player.playerColor !== "red") {
-      modalQueue.classList.toggle("hide");
-      init();
-    }
-  } else if (state.status === 3) {
-    displayWinner(state.winner);
-  }
-}
-
-function handleUserJoin(newState) {
-  state = JSON.parse(newState);
-  addMyPlayer(player.playerColor, state.players);
-}
-
 function setGameCode(gc) {
   roomName = gc;
 
   gameCode.innerHTML = gc;
 }
 
-function handleInit(client) {
-  state = JSON.parse(client.state);
-  player = state.players[client.playerNumber - 1];
-  console.log("new player: " + player);
-  console.log("My color is " + player.playerColor);
-  addMyPlayer(player.playerColor, state.players);
-  if (player.playerColor !== "red") {
-    startBtn.classList.toggle("hide");
+function handleGameState(payload) {
+  const newState = JSON.parse(payload.state);
+  const type = payload.type;
+
+  switch (type) {
+    /*
+     * notifies this player if
+     * another player has joined this room
+     */
+    case "PLAYER_JOINED":
+      addPlayerToDOM(player.playerColor, newState.players);
+      break;
+    /*
+     * notifies this player and all players
+     * in this room when game status has changed
+     */
+    case "STATUS_CHANGED":
+      handleStatusChange(newState);
+      break;
+    /*
+     * notifies all players
+     * in this room when a player moves
+     */
+    case "PLAYER_MOVED":
+      movePlayersByMargin(newState);
+      checkWin()
+      break;
+    /*
+     * notifies all players
+     * in this room when the turn has changed
+     */
+    case "TURN_CHANGED":
+      handleTurnChanged(newState);
+      if(newState.turn !== player.playerColor) {
+        showCurrentPlayerMoving(newState.turn)
+      } else {
+        currentPlayerIndicatorModal.classList.add('hide')
+      }
+      break;
+    default:
+      break;
   }
-}
 
-function handleJoinGame(e) {
-  const roomCode = document.getElementById("room-code").value;
-  socket.emit("joinGame", roomCode);
-  handleModal(e);
-  modalQueue.classList.toggle("hide");
-  gameCode.innerHTML = roomCode;
-}
-
-function handleStartGame(e) {
-  if (player.playerColor === "red") {
-    modalQueue.classList.toggle("hide");
-    console.log("room name", roomName);
-    socket.emit("gameStart", roomName);
-    init();
-  }
-}
-
-function handleGameState(gameState) {
-  state = JSON.parse(gameState);
+  state = newState;
 }
