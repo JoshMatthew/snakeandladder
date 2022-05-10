@@ -186,6 +186,11 @@ function checkLaddersAndSnakes() {
 //event listeners
 enterRoom.addEventListener("click", handleJoinGame);
 startBtn.addEventListener("click", handleStartGame);
+document.addEventListener("DOMContentLoaded", (e) => {
+  setTimeout(() => {
+    splash.classList.add('hide-splash')
+  }, 2000)
+})
 
 //event handlers
 function handleTurnChanged(newState) {

@@ -4,26 +4,33 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Snake and Ladder</title>
+    <title>CapSica</title>
+    <link rel="shortcut icon" type="image/jpg" href="./img/favicon.png"/>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400&display=swap"
-      rel="stylesheet"
-    />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400&family=VT323&display=swap" rel="stylesheet">
+    
     <link rel="stylesheet" href="./styles/index.css" />
     <link rel="stylesheet" href="./styles/board-components.css">
   </head>
   <body>
+    <div class="splash">
+      <img src="./img/splash.png" alt="capsica" id="splash-img" class="fade-in">
+      <span class="fade-in">LOADING ASSETS...</span>
+    </div>
     <section id="homeScreen" class="proxy">
       <div class="container">
-        <span class="main-title">CapSica</span>
+        <!-- <span class="main-title">CapSica</span> -->
         <div class="menu">
             <a href="#" class="menu-btn" id="create-room">Create room</a>
             <!-- <a href="#" class="menu-btn" id="create-room">New Game</a> -->
             <a href="#" class="menu-btn" id="join-room">Join room</a>
+            <a href="#" class="menu-btn" id="settings">Settings</a>
         </div>
       </div>
+      <!-- <span id="copyright">&copy; Capsica</span> -->
     </section>
     <section id="gameSection" class="proxy hide">
         <div id="board">
@@ -151,7 +158,7 @@
 
         <div class="side">
           <p id="p-turn">Red player's turn</p>
-          <p id="p-instruction">Your turn</p>
+          <p id="p-instruction">Press the button to start moving</p>
           <div id="cube-outer">
             <div id="cube-inner">
               <div id="front"><img src="./img/1.png"></div>

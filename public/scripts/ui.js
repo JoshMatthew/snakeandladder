@@ -18,6 +18,7 @@ const questionImg = document.getElementById("question-img");
 const questionVid = document.getElementById("question-video");
 const optionsList = document.getElementById("options-list");
 const qIndicator = document.getElementById("q-indicator");
+const splash = document.querySelector(".splash")
 const currentTurnIndicatorSpan = document.getElementById(
   "current-turn-indicator"
 );
@@ -95,7 +96,7 @@ function changePlayerTurnIndicator(turn, playerColor) {
   } else {
     camRoll = true;
     playerTurnIndicator.innerHTML = `Your turn!`;
-    playerTurnInstruction.innerHTML = "Your turn";
+    playerTurnInstruction.innerHTML = "Press the button to start moving";
     rollDiceBtn.classList.remove("hide");
   }
 }
