@@ -9,7 +9,6 @@ async function mainGame(newState) {
   if(state.status !== 3){ //checks if this player is already finish
     const answer = await makeQuestion(checkLaddersAndSnakes());
     
-    answer.isCorrect = true
     switch (answer.type) {
       case "snake":
         answer.isCorrect ? move("snake", -2) : move("snake", answer.index);
