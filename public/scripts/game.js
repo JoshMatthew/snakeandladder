@@ -6,20 +6,20 @@ async function mainGame(newState) {
   stopEvent = true
   state = JSON.parse(newState);
 
-  if(state.status !== 3){ //checks if this player is already finish
+  if(state.status !== GAME_STATE.END){ //checks if this player is already finish
     const answer = await makeQuestion(checkLaddersAndSnakes());
     
     switch (answer.type) {
-      case "snake":
-        answer.isCorrect ? move("snake", -2) : move("snake", answer.index);
+      case SNAKE:
+        answer.isCorrect ? move(SNAKE, RUN_ONCE) : move(SNAKE, answer.index);
         break;
-      case "ladder":
-        answer.isCorrect ? move("ladder", answer.index) : move("ladder", -2);
+      case LADDER:
+        answer.isCorrect ? move(LADDER, answer.index) : move(LADDER, RUN_ONCE);
         break;
-      case "normal":
+      case NORMAL:
         answer.isCorrect
-          ? move("normal", -1, await rollDice())
-          : move("normal", -1);
+          ? move(NORMAL, NONE, await rollDice())
+          : move(NORMAL, NONE);
         break;
       default:
         break;
@@ -70,10 +70,10 @@ function makeQuestion(questionType) {
       let questionUsed = {};
   
       //DOM
-      if (consequence === "snake") {
+      if (consequence === SNAKE) {
         qIndicator.innerHTML =
           "Answer the question correctly to escape the snake!";
-      } else if (consequence === "ladder") {
+      } else if (consequence === LADDER) {
         qIndicator.innerHTML =
           "Answer the question correctly to climb the ladder!";
       } else {
@@ -93,33 +93,33 @@ function makeQuestion(questionType) {
           if (e.target.id !== "options-list") {
             const ans = getOptionLetterFromIdx(e.target.id);
   
-            if (consequence === "snake") {
+            if (consequence === SNAKE) {
               if (ans === rightAns) {
                 alert("Right answer! You evaded the snake!");
-                resolve({ isCorrect: true, type: "snake", index: idx });
+                resolve({ isCorrect: true, type: SNAKE, index: idx });
                 handleQuestionModal();
               } else {
-                resolve({ isCorrect: false, type: "snake", index: idx });
+                resolve({ isCorrect: false, type: SNAKE, index: idx });
                 handleQuestionModal();
               }
-            } else if (consequence === "ladder") {
+            } else if (consequence === LADDER) {
               if (ans === rightAns) {
                 alert("Right answer! Climbing now...");
-                resolve({ isCorrect: true, type: "ladder", index: idx });
+                resolve({ isCorrect: true, type: LADDER, index: idx });
                 handleQuestionModal();
               } else {
                 alert("Wrong answer! Let's not use the ladder...");
-                resolve({ isCorrect: false, type: "ladder", index: idx });
+                resolve({ isCorrect: false, type: LADDER, index: idx });
                 handleQuestionModal();
               }
             } else {
               if (ans === rightAns) {
                 alert("Right answer! Will move...");
-                resolve({ isCorrect: true, type: "normal", index: idx });
+                resolve({ isCorrect: true, type: NORMAL, index: idx });
                 handleQuestionModal();
               } else {
                 alert("Wrong answer! Let's just sit here for now...");
-                resolve({ isCorrect: false, type: "normal", index: idx });
+                resolve({ isCorrect: false, type: NORMAL, index: idx });
                 handleQuestionModal();
               }
             }
@@ -139,8 +139,8 @@ function makeQuestion(questionType) {
 function move(type, index, diceNumber = 0) {
   let marginForCurrentTurn = {}
   if(!checkRange(diceNumber)) {
-    if (type !== "normal") {
-      if(index === -2) {
+    if (type !== NORMAL) {
+      if(index === RUN_ONCE) {
         marginForCurrentTurn = run(1)
       } else {
         marginForCurrentTurn = {
@@ -237,21 +237,6 @@ function initQuestionDOM(options, questionItself) {
 
     handleQuestionOptionLists(options);
     return questionVid;
-  }
-}
-
-function getPlayerIndexByPlayerColor(color) {
-  if (color === 'red') {
-    return 0
-  }
-  if (color === 'green') {
-    return 1
-  }
-  if (color === 'yellow') {
-    return 2
-  }
-  if (color === 'brown') {
-    return 3
   }
 }
 

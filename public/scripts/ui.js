@@ -143,6 +143,11 @@ function handleCreateRoom(e) {
 }
 
 // error handlers
+
+socket.on("unknownCode", unknownRoom);
+socket.on("tooManyPlayers", tooManyPlayers);
+socket.on("invalidSession", invalidSession);
+
 function invalidSession() {
   alert("Can't join game. The game has already started or finished.");
   window.location.reload();
