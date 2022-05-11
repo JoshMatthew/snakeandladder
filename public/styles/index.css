@@ -30,7 +30,7 @@ section {
 
 #homeScreen {
     height: 100vmin;
-    background: url(../img/bg3.png);
+    background: url(../assets/img/bg3.png);
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
@@ -38,7 +38,7 @@ section {
 
 #gameSection {
     height: 100vmin;
-    background: url(../img/bg2.png);
+    background: url(../assets/img/bg2.png);
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
@@ -233,7 +233,7 @@ section {
     border: 0.1vmin solid black;
     height: 98vmin;
     width: 98vmin;
-    background-image: url(../img/board.png);
+    background-image: url(../assets/img/board.png);
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
@@ -281,7 +281,7 @@ section {
     width: 100%;
     position: absolute;
     transform-style: preserve-3d;
-    transition: all 0.7s linear;
+    transition: all 0.5s linear;
 }
 
 #cube-inner div {

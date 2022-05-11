@@ -1,36 +1,3 @@
-// elements
-const modal = document.getElementById("--modal");
-const modalQueue = document.getElementById("--modal-queue");
-const currentPlayerIndicatorModal = document.getElementById(
-  "--modal-player-info"
-);
-const modalQuestion = document.getElementById("question");
-const tiles = document.querySelectorAll(".tile");
-const gameSection = document.getElementById("gameSection");
-const homeScreen = document.getElementById("homeScreen");
-const gameCode = document.getElementById("game-code");
-const playerList = document.getElementById("players");
-const playerCount = document.getElementById("player-count");
-const playerTurnIndicator = document.getElementById("p-turn");
-const playerTurnInstruction = document.getElementById("p-instruction");
-const questionNormal = document.getElementById("question-normal");
-const questionImg = document.getElementById("question-img");
-const questionVid = document.getElementById("question-video");
-const optionsList = document.getElementById("options-list");
-const qIndicator = document.getElementById("q-indicator");
-const splash = document.querySelector(".splash")
-const currentTurnIndicatorSpan = document.getElementById(
-  "current-turn-indicator"
-);
-
-// btns
-const joinRoomBtn = document.getElementById("join-room");
-const createRoom = document.getElementById("create-room");
-const enterRoom = document.getElementById("enter-room");
-const closeModal = document.getElementById("close-modal");
-const startBtn = document.getElementById("start");
-const rollDiceBtn = document.getElementById("roll-dice-btn");
-
 // init functions
 function setTileNumbers() {
   tiles.forEach((tile, i) => {
@@ -65,8 +32,12 @@ function movePlayersByMargin(state) {
   for (let i = 0; i < players.length; i++) {
     const player = document.querySelector(`#${players[i].playerColor}`);
 
-    player.style.marginLeft = String(players[i].marginLeft) + "vmin";
-    player.style.marginTop = String(players[i].marginTop) + "vmin";
+    if(!(player.style.marginLeft === String(players[i].marginLeft) + "vmin" && player.style.marginTop === String(players[i].marginTop) + "vmin")) {
+      playSound(SOUND.MOVE)
+      player.style.marginLeft = String(players[i].marginLeft) + "vmin";
+      player.style.marginTop = String(players[i].marginTop) + "vmin";
+    }
+
   }
 }
 
@@ -162,4 +133,31 @@ function tooManyPlayers() {
 function unknownRoom(roomCode) {
   alert("The room [" + roomCode + "] does not exist.");
   window.location.reload();
+}
+
+function playSound(sound) {
+  const audio = new Audio();
+  audio.volume = volume;
+
+  switch (sound) {
+    case SOUND.DICE:
+      audio.src = window.gui.getAsset("aud-dice-roll").src;
+      audio.play();
+      break;
+    case SOUND.MOVE:
+      audio.src = window.gui.getAsset("aud-player-move").src;
+      audio.play();
+      break;
+    case SOUND.BG:
+      audio.src = window.gui.getAsset("aud-bg").src;
+      audio.loop = true
+      audio.play();
+      break;
+    case SOUND.HOVER:
+      audio.src = window.gui.getAsset("aud-btn-hover").src;
+      audio.play();
+      break;
+    default:
+      break;
+  }
 }

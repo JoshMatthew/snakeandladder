@@ -1,5 +1,3 @@
-const socket = io();
-
 // sockets
 socket.on("init", handleInit);
 socket.on("gameState", handleGameState);
@@ -48,15 +46,16 @@ function handleStatusChange(updatedState) {
     //queue
   } else if (state.status === GAME_STATE.START) {
     //game start
+    playSound(SOUND.BG)
     modalQueue.classList.toggle("hide");
-    if(state.turn !== player.playerColor) {
-      showCurrentPlayerMoving(state.turn)
+    if (state.turn !== player.playerColor) {
+      showCurrentPlayerMoving(state.turn);
     }
     init();
   } else if (state.status === GAME_STATE.END) {
     //end
     displayWinner(state.winner); //display it on side
-    showWinner(parseWinnerCode(state.winner)) //show in modal
+    showWinner(parseWinnerCode(state.winner)); //show in modal
   }
 }
 
@@ -85,14 +84,25 @@ function roll(diceNumber) {
       [270, 180],
       [90, 90],
     ];
+
+    playSound(SOUND.DICE);
+
     document.querySelector(
       "#cube-inner"
     ).style.transform = `rotateX(360deg) rotateY(360deg)`;
-    await new Promise((resolve) => setTimeout(resolve, 750));
+    await new Promise((resolve) => setTimeout(resolve, 500));
     document.querySelector("#cube-inner").style.transform = `rotateX(${
       values[diceNumber - 1][0]
     }deg) rotateY(${values[diceNumber - 1][1]}deg)`;
-    await new Promise((resolve) => setTimeout(resolve, 750));
+    await new Promise((resolve) => setTimeout(resolve, 500));
+    document.querySelector("#cube-inner").style.transform = `rotateX(${
+      values[diceNumber - 1][0]
+    }deg) rotateY(${values[diceNumber - 1][1]}deg)`;
+    await new Promise((resolve) => setTimeout(resolve, 500));
+    document.querySelector("#cube-inner").style.transform = `rotateX(${
+      values[diceNumber - 1][0]
+    }deg) rotateY(${values[diceNumber - 1][1]}deg)`;
+    await new Promise((resolve) => setTimeout(resolve, 500));
     resolve(diceNumber);
   });
 }
@@ -101,19 +111,22 @@ function run(diceNumber) {
   let totalMargins = {
     marginLeft: marginLeft(),
     marginTop: marginTop(),
-  }
+  };
 
   if (diceNumber !== 0) {
-    for(let i = 1; i <= diceNumber; i++) {
+    for (let i = 1; i <= diceNumber; i++) {
       let direction = getDirection(totalMargins);
-      console.log(direction)
+      console.log(direction);
 
       if (direction == DIRECTION.UP) {
-        totalMargins.marginTop = Math.round((totalMargins.marginTop -= MARGIN) * 10) / 10;
+        totalMargins.marginTop =
+          Math.round((totalMargins.marginTop -= MARGIN) * 10) / 10;
       } else if (direction == DIRECTION.RIGHT) {
-        totalMargins.marginLeft = Math.round((totalMargins.marginLeft += MARGIN) * 10) / 10;
+        totalMargins.marginLeft =
+          Math.round((totalMargins.marginLeft += MARGIN) * 10) / 10;
       } else if (direction == DIRECTION.LEFT) {
-        totalMargins.marginLeft = Math.round((totalMargins.marginLeft -= MARGIN) * 10) / 10;
+        totalMargins.marginLeft =
+          Math.round((totalMargins.marginLeft -= MARGIN) * 10) / 10;
       }
     }
 
@@ -138,19 +151,21 @@ function checkWin() {
       roomName: state.roomName,
     });
 
-    return true
+    return true;
   } else {
-    return false
+    return false;
   }
 }
 
 function getDirection(totalMargins) {
-  const marginLeft = totalMargins.marginLeft
-  const marginTop = totalMargins.marginTop
+  const marginLeft = totalMargins.marginLeft;
+  const marginTop = totalMargins.marginTop;
   let direction;
   if (
-    (marginLeft == BOARD_RIGHT_MOST && ((marginTop * 10) % (-19.6 * 10)) / 10 == 0) ||
-    (marginLeft == BOARD_LEFT_MOST && ((marginTop * 10) % (-19.6 * 10)) / 10 != 0)
+    (marginLeft == BOARD_RIGHT_MOST &&
+      ((marginTop * 10) % (-19.6 * 10)) / 10 == 0) ||
+    (marginLeft == BOARD_LEFT_MOST &&
+      ((marginTop * 10) % (-19.6 * 10)) / 10 != 0)
   ) {
     direction = DIRECTION.UP;
   } else if (((marginTop * 10) % (-19.6 * 10)) / 10 == 0) {
@@ -186,11 +201,19 @@ function checkLaddersAndSnakes() {
 //event listeners
 enterRoom.addEventListener("click", handleJoinGame);
 startBtn.addEventListener("click", handleStartGame);
-document.addEventListener("DOMContentLoaded", (e) => {
+const buttons = document.querySelectorAll("a")
+
+for(let i = 0; i < buttons.length; i++) {
+  buttons[i].addEventListener("click", e => {
+    playSound(SOUND.HOVER)
+  });
+}
+
+window.addEventListener("DOMContentLoaded", (e) => {
   setTimeout(() => {
-    splash.classList.add('hide-splash')
-  }, 2000)
-})
+    splash.classList.add("hide-splash");
+  }, 2000);
+});
 
 //event handlers
 function handleTurnChanged(newState) {
@@ -237,7 +260,7 @@ function handleGameState(payload) {
      */
     case GAME_STATE.PLAYER_MOVED:
       movePlayersByMargin(newState);
-      checkWin()
+      checkWin();
       break;
     /*
      * notifies all players
@@ -245,10 +268,10 @@ function handleGameState(payload) {
      */
     case GAME_STATE.TURN_CHANGED:
       handleTurnChanged(newState);
-      if(newState.turn !== player.playerColor) {
-        showCurrentPlayerMoving(newState.turn)
+      if (newState.turn !== player.playerColor) {
+        showCurrentPlayerMoving(newState.turn);
       } else {
-        currentPlayerIndicatorModal.classList.add('hide')
+        currentPlayerIndicatorModal.classList.add("hide");
       }
       break;
     default:
