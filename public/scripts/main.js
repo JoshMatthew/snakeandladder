@@ -209,12 +209,6 @@ for(let i = 0; i < buttons.length; i++) {
   });
 }
 
-window.addEventListener("DOMContentLoaded", (e) => {
-  setTimeout(() => {
-    splash.classList.add("hide-splash");
-  }, 2000);
-});
-
 //event handlers
 function handleTurnChanged(newState) {
   if (!newState.moving) {
