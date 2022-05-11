@@ -69,7 +69,7 @@ function parseWinnerCode(code) {
   }
 
   if (code === 2) {
-    return PLAYER_COLOR.RED;
+    return PLAYER_COLOR.GREEN;
   }
 
   if (code === 3) {
