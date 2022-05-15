@@ -511,3 +511,34 @@ img {
     opacity: 0;
     animation: fadeIn 1s ease-in forwards;
 }
+
+#sound-btn {
+    position: absolute;
+    top: 2vmin;
+    right: 2vmin;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-decoration: none;
+    color: var(--jet);
+    border-radius: 7px;
+    box-shadow: #111 10px 10px 16px;
+}
+
+#sound-btn span {
+    height: 42px;
+    width: 42px;
+    background: url(../assets/img/sound-on.png);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    border-radius: 7px;
+}
+
+#sound-btn:hover {
+    background-color: var(--cool-grey-fainted);
+}
+
+#sound-btn:active {
+    box-shadow: none;
+}

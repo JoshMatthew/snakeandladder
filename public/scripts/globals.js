@@ -20,6 +20,7 @@ const questionImg = document.getElementById("question-img");
 const questionVid = document.getElementById("question-video");
 const optionsList = document.getElementById("options-list");
 const qIndicator = document.getElementById("q-indicator");
+const soundImg = document.getElementById("sound-img");
 const splash = document.querySelector(".splash");
 const currentTurnIndicatorSpan = document.getElementById(
   "current-turn-indicator"
@@ -32,6 +33,7 @@ const enterRoom = document.getElementById("enter-room");
 const closeModal = document.getElementById("close-modal");
 const startBtn = document.getElementById("start");
 const rollDiceBtn = document.getElementById("roll-dice-btn");
+const soundBtn = document.getElementById("sound-btn");
 
 let stopEvent = false;
 let player = {};
@@ -39,6 +41,7 @@ let roomName = "";
 let state = {};
 let question = {};
 let volume = 0.2;
+let bgm = undefined;
 ///////
 let questionAssets = [
   {
@@ -246,6 +249,16 @@ let assets = [
     id: "img-snake8",
     var: (snake8 = document.createElement("img")),
     file: "../assets/img/s8.png",
+  },
+  {
+    id: "img-audio-on",
+    var: (audioOn = document.createElement("img")),
+    file: "../assets/img/sound-on.png",
+  },
+  {
+    id: "img-audio-off",
+    var: (audioOff = document.createElement("img")),
+    file: "../assets/img/sound-off.png",
   },
   ...questionAssets,
   ...audioAssets,

@@ -32,12 +32,16 @@ function movePlayersByMargin(state) {
   for (let i = 0; i < players.length; i++) {
     const player = document.querySelector(`#${players[i].playerColor}`);
 
-    if(!(player.style.marginLeft === String(players[i].marginLeft) + "vmin" && player.style.marginTop === String(players[i].marginTop) + "vmin")) {
-      playSound(SOUND.MOVE)
+    if (
+      !(
+        player.style.marginLeft === String(players[i].marginLeft) + "vmin" &&
+        player.style.marginTop === String(players[i].marginTop) + "vmin"
+      )
+    ) {
+      playSound(SOUND.MOVE);
       player.style.marginLeft = String(players[i].marginLeft) + "vmin";
       player.style.marginTop = String(players[i].marginTop) + "vmin";
     }
-
   }
 }
 
@@ -95,8 +99,23 @@ function toUpperCaseColor(color) {
 joinRoomBtn.addEventListener("click", handleJoinRoombtn);
 closeModal.addEventListener("click", handleModal);
 createRoom.addEventListener("click", handleCreateRoom);
+soundBtn.addEventListener("click", toggleSound);
 
 // event handlers
+function toggleSound(e) {
+  const imgSrc = volume === 0 ? "../assets/img/sound-on.png" : "../assets/img/sound-off.png";
+
+  if (volume === 0) {
+    volume = 0.2;
+    // for bgm;
+    bgm.play();
+  } else {
+    volume = 0;
+    bgm.pause();
+  }
+  soundImg.style.background = `url(${imgSrc})`;
+}
+
 function handleJoinRoombtn(e) {
   handleModal(e);
 }
@@ -150,8 +169,9 @@ function playSound(sound) {
       break;
     case SOUND.BG:
       audio.src = window.gui.getAsset("aud-bg").src;
-      audio.loop = true
+      audio.loop = true;
       audio.play();
+      bgm = audio;
       break;
     case SOUND.HOVER:
       audio.src = window.gui.getAsset("aud-btn-hover").src;
