@@ -428,7 +428,7 @@ img {
 
 #roll-dice-btn {
     position: absolute;
-    top: 35vmin;
+    top: 30vmin;
     left: 10vmin;
     width: 16vmin;
     text-align: center;
@@ -443,7 +443,7 @@ img {
 }
 
 #roll-dice-btn:hover {
-    background-color: var(--cool-grey-fainted);
+    background-color: #f9e869;
 }
 
 #roll-dice-btn:active {
@@ -512,6 +512,22 @@ img {
     animation: fadeIn 1s ease-in forwards;
 }
 
+#quit-btn {
+    position: absolute;
+    top: 2vmin;
+    right: 10vmin;
+    display: flex;
+    padding: 0.5rem 1rem;
+    justify-content: center;
+    align-items: center;
+    text-decoration: none;
+    color: var(--bone);
+    background-color: #e62f17;
+    border-radius: 7px;
+    box-shadow: #111 10px 10px 16px;
+    z-index: 9999;
+}
+
 #sound-btn {
     position: absolute;
     top: 2vmin;
@@ -523,6 +539,7 @@ img {
     color: var(--jet);
     border-radius: 7px;
     box-shadow: #111 10px 10px 16px;
+    z-index: 9999;
 }
 
 #sound-btn span {
@@ -535,10 +552,14 @@ img {
     border-radius: 7px;
 }
 
+#quit-btn:hover {
+    background-color: #e95f4c;
+}
+
 #sound-btn:hover {
     background-color: var(--cool-grey-fainted);
 }
 
-#sound-btn:active {
+#sound-btn:active, #quit-btn:active {
     box-shadow: none;
 }

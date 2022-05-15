@@ -56,6 +56,9 @@ function handleStatusChange(updatedState) {
     //end
     displayWinner(state.winner); //display it on side
     showWinner(parseWinnerCode(state.winner)); //show in modal
+  } else if (state.status === GAME_STATE.FORCE_QUIT) {
+    // toggleScreen(gameSection)
+    window.location.reload();
   }
 }
 

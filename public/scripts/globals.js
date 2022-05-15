@@ -34,6 +34,7 @@ const closeModal = document.getElementById("close-modal");
 const startBtn = document.getElementById("start");
 const rollDiceBtn = document.getElementById("roll-dice-btn");
 const soundBtn = document.getElementById("sound-btn");
+const quitBtn = document.getElementById("quit-btn");
 
 let stopEvent = false;
 let player = {};
@@ -391,6 +392,7 @@ const GAME_STATE = {
   QUEUE: 1,
   START: 2,
   END: 3,
+  FORCE_QUIT: 4,
 };
 
 const DIRECTION = {

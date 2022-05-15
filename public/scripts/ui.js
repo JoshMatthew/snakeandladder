@@ -100,8 +100,22 @@ joinRoomBtn.addEventListener("click", handleJoinRoombtn);
 closeModal.addEventListener("click", handleModal);
 createRoom.addEventListener("click", handleCreateRoom);
 soundBtn.addEventListener("click", toggleSound);
+quitBtn.addEventListener("click", handleQuit);
 
 // event handlers
+function handleQuit() {
+//show the quit button if and only if the user is 
+//the host aka red
+  if(player.playerColor === PLAYER_COLOR.RED) {
+   let isExecuted = confirm("Are you sure to quit the current game session?"); 
+   if(isExecuted) {
+     socket.emit('quit-game', {roomName: state.roomName})
+   }
+  } else {
+    alert("Only the host can quit the game.")
+  }
+}
+
 function toggleSound(e) {
   const imgSrc = volume === 0 ? "../assets/img/sound-on.png" : "../assets/img/sound-off.png";
 
@@ -152,6 +166,10 @@ function tooManyPlayers() {
 function unknownRoom(roomCode) {
   alert("The room [" + roomCode + "] does not exist.");
   window.location.reload();
+}
+
+function toggleScreen(screen) {
+  screen.classList.toggle("hide")
 }
 
 function playSound(sound) {

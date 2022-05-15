@@ -32,6 +32,15 @@ io.on("connection", (client) => {
   client.on("doneMoving", handleDoneMoving)
   client.on("getQuestion", handleGetQuestion)
   client.on("updateCurrentPlayerMargin", handleUpdateCurrentPlayerMargin)
+  client.on("quit-game", handleQuitGame)
+
+  function handleQuitGame(data) {
+    let currentState = state[data.roomName]
+
+    currentState.status = 4;
+    console.log("room " + data.roomName + " status changed: " + "4");
+    io.to(data.roomName).emit("gameState", {type: "STATUS_CHANGED", state: JSON.stringify(currentState)});
+  }
 
   function handleUpdateCurrentPlayerMargin(data) {
     let currentState = state[data.roomName]
